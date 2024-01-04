@@ -1,6 +1,6 @@
 package com.lavendor.mealmate.service;
 
-import com.lavendor.mealmate.model.Ingredient;
+import com.lavendor.mealmate.model.RecipeIngredient;
 import com.lavendor.mealmate.model.Recipe;
 import com.lavendor.mealmate.repository.RecipeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,8 +17,8 @@ public class RecipeService {
         this.recipeRepository = recipeRepository;
     }
 
-    public Recipe createRecipe(String recipeName, List<Ingredient> ingredients){
-        Recipe recipe = new Recipe(recipeName,ingredients);
+    public Recipe createRecipe(String recipeName, List<RecipeIngredient> recipeIngredients){
+        Recipe recipe = new Recipe(recipeName, recipeIngredients);
         return recipeRepository.save(recipe);
     }
 

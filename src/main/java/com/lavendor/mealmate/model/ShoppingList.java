@@ -20,7 +20,7 @@ public class ShoppingList {
             joinColumns = @JoinColumn(name = "shopping_list_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
-    private List<Ingredient> ingredients;
+    private List<RecipeIngredient> recipeIngredients;
 
 
 }

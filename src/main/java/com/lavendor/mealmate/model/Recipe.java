@@ -13,20 +13,15 @@ public class Recipe {
     private Long recipeId;
     private String recipeName;
 
-    @ManyToMany
-    @JoinTable(
-            name = "recipe_ingredients",
-            joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
-    )
-    private List<Ingredient> ingredients;
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private List<RecipeIngredient> recipeIngredients;
 
     public Recipe() {
     }
 
-    public Recipe(String recipeName, List<Ingredient> ingredients) {
+    public Recipe(String recipeName, List<RecipeIngredient> recipeIngredients) {
         this.recipeName = recipeName;
-        this.ingredients = ingredients;
+        this.recipeIngredients = recipeIngredients;
     }
 
     public Long getRecipeId() {
@@ -45,11 +40,11 @@ public class Recipe {
         this.recipeName = recipeName;
     }
 
-    public List<Ingredient> getIngredients() {
-        return ingredients;
+    public List<RecipeIngredient> getIngredients() {
+        return recipeIngredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setIngredients(List<RecipeIngredient> recipeIngredients) {
+        this.recipeIngredients = recipeIngredients;
     }
 }

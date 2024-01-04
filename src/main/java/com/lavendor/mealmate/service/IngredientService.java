@@ -1,7 +1,8 @@
 package com.lavendor.mealmate.service;
 
-import com.lavendor.mealmate.model.Ingredient;
-import com.lavendor.mealmate.repository.IngredientRepository;
+import com.lavendor.mealmate.model.BasicIngredient;
+import com.lavendor.mealmate.model.RecipeIngredient;
+import com.lavendor.mealmate.repository.RecipeIngredientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -10,32 +11,33 @@ import java.util.List;
 @Service
 public class IngredientService {
 
-private final IngredientRepository ingredientRepository;
+private final RecipeIngredientRepository recipeIngredientRepository;
 
-    public IngredientService(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
+    public IngredientService(RecipeIngredientRepository recipeIngredientRepository) {
+        this.recipeIngredientRepository = recipeIngredientRepository;
     }
 
-    public Ingredient addIngredient(String ingredientName, double quantity, String unit){
-        Ingredient ingredient = new Ingredient(ingredientName,quantity,unit);
-        return ingredientRepository.save(ingredient);
+    public RecipeIngredient addIngredient(BasicIngredient basicIngredient, double quantity, String unit){
+        RecipeIngredient recipeIngredient = new RecipeIngredient(basicIngredient,quantity,unit);
+        return recipeIngredientRepository.save(recipeIngredient);
     }
 
-    public Ingredient getIngredientById(Long ingredientId){
-        return ingredientRepository.findById(ingredientId).orElseThrow(()-> new EntityNotFoundException("Ingredient not found"));
+    public RecipeIngredient getIngredientById(Long ingredientId){
+        return recipeIngredientRepository.findById(ingredientId).orElseThrow(()-> new EntityNotFoundException("Ingredient not found"));
     }
 
-    public Ingredient getIngredientByName(String ingredientName){
-        return ingredientRepository.findByIngredientName(ingredientName).orElseThrow(()-> new EntityNotFoundException("Ingredient not found"));
+    public RecipeIngredient getIngredientByName(String recipeIngredientName){
+        BasicIngredient basicIngredient = new BasicIngredient(recipeIngredientName);
+        return recipeIngredientRepository.findByBasicIngredient(basicIngredient).orElseThrow(()-> new EntityNotFoundException("Ingredient not found"));
     }
 
-    public List<Ingredient> getAllIngredients(){
-        return ingredientRepository.findAll();
+    public List<RecipeIngredient> getAllIngredients(){
+        return recipeIngredientRepository.findAll();
     }
 
     public void deleteIngredient(Long ingredientId){
-        Ingredient ingredient = ingredientRepository.findById(ingredientId).orElseThrow(()-> new EntityNotFoundException("Ingredient not found"));
-        ingredientRepository.delete(ingredient);
+        RecipeIngredient recipeIngredient = recipeIngredientRepository.findById(ingredientId).orElseThrow(()-> new EntityNotFoundException("Ingredient not found"));
+        recipeIngredientRepository.delete(recipeIngredient);
     }
 
 }
