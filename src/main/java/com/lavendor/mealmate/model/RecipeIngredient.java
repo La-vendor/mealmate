@@ -25,10 +25,11 @@ public class RecipeIngredient {
     public RecipeIngredient() {
     }
 
-    public RecipeIngredient(BasicIngredient basicIngredient, double quantity, String unit) {
+    public RecipeIngredient(BasicIngredient basicIngredient, double quantity, String unit, Recipe recipe) {
         this.basicIngredient = basicIngredient;
         this.quantity = quantity;
         this.unit = unit;
+        this.recipe = recipe;
     }
 
     public Long getRecipeIngredientId() {
