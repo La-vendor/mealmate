@@ -26,7 +26,7 @@ public class BasicIngredientService {
     }
 
     public BasicIngredient getBasicIngredientByName(String basicIngredientName){
-        return basicIngredientRepository.findByBasicIngredientName(basicIngredientName).orElseThrow(() -> new EntityNotFoundException("Ingredient not found"));
+        return basicIngredientRepository.findByBasicIngredientNameIgnoreCase(basicIngredientName).orElseThrow(() -> new EntityNotFoundException("Ingredient not found"));
     }
 
     public List<BasicIngredient> getAllBasicIngredients(){

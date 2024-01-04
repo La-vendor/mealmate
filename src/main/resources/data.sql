@@ -4,7 +4,7 @@ INSERT INTO users (username) VALUES ('john_dell');
 
 --Ingredients
 INSERT INTO basic_ingredients (basic_ingredient_name) VALUES ('Pasta');
-INSERT INTO basic_ingredients (basic_ingredient_name) VALUES ('Pepper');
+INSERT INTO basic_ingredients (basic_ingredient_name) VALUES ('Cheese');
 INSERT INTO basic_ingredients (basic_ingredient_name) VALUES ('Onion');
 
 --Recipes
