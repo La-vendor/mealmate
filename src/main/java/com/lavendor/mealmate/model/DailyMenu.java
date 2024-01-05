@@ -63,4 +63,8 @@ public class DailyMenu {
     public void setRecipeList(List<Recipe> recipeList) {
         this.recipeList = recipeList;
     }
+
+    public boolean containsRecipe(Recipe recipe) {
+        return recipeList.contains(recipe);
+    }
 }
