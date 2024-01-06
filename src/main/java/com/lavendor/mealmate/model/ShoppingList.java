@@ -22,5 +22,39 @@ public class ShoppingList {
     )
     private List<RecipeIngredient> recipeIngredients;
 
+    public ShoppingList() {
+    }
 
+    public ShoppingList(String name, List<RecipeIngredient> recipeIngredients){
+        this.name = name;
+        this.recipeIngredients = recipeIngredients;
+    }
+
+    public void addRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
+        this.recipeIngredients.addAll(recipeIngredients);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public List<RecipeIngredient> getRecipeIngredients() {
+        return recipeIngredients;
+    }
+
+    public void setRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
+        this.recipeIngredients = recipeIngredients;
+    }
 }

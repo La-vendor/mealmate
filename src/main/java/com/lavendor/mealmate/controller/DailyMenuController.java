@@ -20,10 +20,6 @@ public class DailyMenuController {
         this.dailyMenuService = dailyMenuService;
     }
 
-    @GetMapping
-    public String page(){
-        return "daily-menu";
-    }
 
 
     @GetMapping("/all")
@@ -77,6 +73,5 @@ public class DailyMenuController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Failed to add recipe to DailyMenu");
         }
     }
-
 
 }
