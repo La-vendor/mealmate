@@ -11,12 +11,18 @@ public class BasicIngredient {
     private Long basicIngredientId;
 
     private String basicIngredientName;
+    private String unit;
 
     public BasicIngredient() {
     }
 
     public BasicIngredient(String basicIngredientName) {
         this.basicIngredientName = basicIngredientName;
+    }
+
+    public BasicIngredient(String basicIngredientName, String unit) {
+        this.basicIngredientName = basicIngredientName;
+        this.unit = unit;
     }
 
     public Long getBasicIngredientId() {
@@ -33,5 +39,13 @@ public class BasicIngredient {
 
     public void setBasicIngredientName(String basicIngredientName) {
         this.basicIngredientName = basicIngredientName;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

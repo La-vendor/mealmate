@@ -18,18 +18,13 @@ public class RecipeIngredientService {
         this.recipeIngredientRepository = recipeIngredientRepository;
     }
 
-    public RecipeIngredient addRecipeIngredient(BasicIngredient basicIngredient, double quantity, String unit, Recipe recipe) {
-        RecipeIngredient recipeIngredient = new RecipeIngredient(basicIngredient, quantity, unit, recipe);
+    public RecipeIngredient addRecipeIngredient(BasicIngredient basicIngredient, double quantity, Recipe recipe) {
+        RecipeIngredient recipeIngredient = new RecipeIngredient(basicIngredient, quantity, recipe);
         return recipeIngredientRepository.save(recipeIngredient);
     }
 
     public RecipeIngredient getRecipeIngredientById(Long ingredientId) {
         return recipeIngredientRepository.findById(ingredientId).orElseThrow(() -> new EntityNotFoundException("Ingredient not found"));
-    }
-
-    public RecipeIngredient getRecipeIngredientByName(String recipeIngredientName) {
-        BasicIngredient basicIngredient = new BasicIngredient(recipeIngredientName);
-        return recipeIngredientRepository.findByBasicIngredient(basicIngredient).orElseThrow(() -> new EntityNotFoundException("Ingredient not found"));
     }
 
     public List<RecipeIngredient> getAllRecipeIngredients() {

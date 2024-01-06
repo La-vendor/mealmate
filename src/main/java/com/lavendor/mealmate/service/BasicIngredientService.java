@@ -16,8 +16,8 @@ public class BasicIngredientService {
         this.basicIngredientRepository = basicIngredientRepository;
     }
 
-    public BasicIngredient addBasicIngredient(String basicIngredientName){
-        BasicIngredient basicIngredient = new BasicIngredient(basicIngredientName);
+    public BasicIngredient addBasicIngredient(String basicIngredientName, String unit){
+        BasicIngredient basicIngredient = new BasicIngredient(basicIngredientName, unit);
         return basicIngredientRepository.save(basicIngredient);
     }
 

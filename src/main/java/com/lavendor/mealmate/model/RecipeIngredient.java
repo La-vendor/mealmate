@@ -20,15 +20,13 @@ public class RecipeIngredient {
     private Recipe recipe;
 
     private double quantity;
-    private String unit;
 
     public RecipeIngredient() {
     }
 
-    public RecipeIngredient(BasicIngredient basicIngredient, double quantity, String unit, Recipe recipe) {
+    public RecipeIngredient(BasicIngredient basicIngredient, double quantity, Recipe recipe) {
         this.basicIngredient = basicIngredient;
         this.quantity = quantity;
-        this.unit = unit;
         this.recipe = recipe;
     }
 
@@ -56,12 +54,5 @@ public class RecipeIngredient {
         this.quantity = quantity;
     }
 
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
 
 }
