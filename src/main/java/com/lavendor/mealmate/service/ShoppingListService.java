@@ -92,17 +92,6 @@ public class ShoppingListService {
         return aggregatedIngredients;
     }
 
-//    private List<RecipeIngredient> aggregateIngredients(Map<RecipeIngredient, Double> ingredientQuantityMap) {
-//        List<RecipeIngredient> aggregatedIngredients = new ArrayList<>();
-//        for (Map.Entry<RecipeIngredient, Double> entry : ingredientQuantityMap.entrySet()) {
-//            RecipeIngredient recipeIngredient = entry.getKey();
-//            double newQuantity = entry.getValue();
-//            recipeIngredient.setQuantity(newQuantity);
-//            aggregatedIngredients.add(recipeIngredient);
-//        }
-//        return aggregatedIngredients;
-//    }
-
     public List<ShoppingList> getAllShoppingLists() {
         return shoppingListRepository.findAll();
     }

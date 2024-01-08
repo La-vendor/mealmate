@@ -4,13 +4,14 @@ import com.lavendor.mealmate.model.DailyMenu;
 import com.lavendor.mealmate.service.DailyMenuService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/daily-menu")
 public class DailyMenuController {
 
@@ -20,6 +21,30 @@ public class DailyMenuController {
         this.dailyMenuService = dailyMenuService;
     }
 
+    @GetMapping()
+    public  String getDailyMenuPage(Model model){
+        List<DailyMenu> dailyMenus = dailyMenuService.getAllDailyMenu();
+        model.addAttribute("dailyMenus", dailyMenus);
+        return "daily-menu";
+    }
+
+    @PostMapping("/add")
+    public String addDailyMenu() {
+
+        DailyMenu dailyMenu = dailyMenuService.createDailyMenu();
+
+        return "redirect:/daily-menu";
+    }
+
+    @PostMapping("/{dailyMenuId}/add-recipe/{recipeId}")
+    public String addRecipeToDailyMenu(
+            @PathVariable("dailyMenuId") Long dailyMenuId,
+            @PathVariable("recipeId") Long recipeId) {
+
+        boolean recipeAdded = dailyMenuService.addRecipeToDailyMenu(dailyMenuId,recipeId);
+
+        return  "redirect:/daily-menu";
+    }
 
 
     @GetMapping("/all")
@@ -48,30 +73,30 @@ public class DailyMenuController {
         return ResponseEntity.ok("Daily Menu with ID: " + dailyMenuId + " deleted successfully");
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<String> addDailyMenu() {
+//    @PostMapping("/add")
+//    public ResponseEntity<String> addDailyMenu() {
+//
+//        DailyMenu dailyMenu = dailyMenuService.createDailyMenu(LocalDate.now());
+//
+//        if (dailyMenu != null) {
+//            return ResponseEntity.status(HttpStatus.CREATED).body("DailyMenu added successfully!");
+//        } else {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add DailyMenu");
+//        }
+//    }
 
-        DailyMenu dailyMenu = dailyMenuService.createDailyMenu(LocalDate.now());
-
-        if (dailyMenu != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body("DailyMenu added successfully!");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add DailyMenu");
-        }
-    }
-
-    @PostMapping("/{dailyMenuId}/add-recipe/{recipeId}")
-    public ResponseEntity<String> addRecipeToDailyMenu(
-            @PathVariable("dailyMenuId") Long dailyMenuId,
-            @PathVariable("recipeId") Long recipeId) {
-
-        boolean recipeAdded = dailyMenuService.addRecipeToDailyMenu(dailyMenuId,recipeId);
-
-        if(recipeAdded){
-            return ResponseEntity.ok("Recipe: " + recipeId + " added successfully to DailyMenu: " + dailyMenuId);
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Failed to add recipe to DailyMenu");
-        }
-    }
+//    @PostMapping("/{dailyMenuId}/add-recipe/{recipeId}")
+//    public ResponseEntity<String> addRecipeToDailyMenu(
+//            @PathVariable("dailyMenuId") Long dailyMenuId,
+//            @PathVariable("recipeId") Long recipeId) {
+//
+//        boolean recipeAdded = dailyMenuService.addRecipeToDailyMenu(dailyMenuId,recipeId);
+//
+//        if(recipeAdded){
+//            return ResponseEntity.ok("Recipe: " + recipeId + " added successfully to DailyMenu: " + dailyMenuId);
+//        }else{
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Failed to add recipe to DailyMenu");
+//        }
+//    }
 
 }

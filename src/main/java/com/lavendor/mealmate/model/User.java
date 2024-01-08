@@ -16,9 +16,9 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "user_meals",
+            name = "user_dailymenus",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "meal_id")
+            inverseJoinColumns = @JoinColumn(name = "daily_menu_id")
     )
     private List<DailyMenu> dailyMenus;
 

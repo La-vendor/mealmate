@@ -4,15 +4,16 @@ import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.service.BasicIngredientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/ingredients")
 public class BasicIngredientController {
 
@@ -22,7 +23,16 @@ public class BasicIngredientController {
         this.basicIngredientService = basicIngredientService;
     }
 
+    //Thymeleaf
+    @GetMapping()
+    public String getBasicIngredientsPage(Model model) {
+        List<BasicIngredient> basicIngredientList = basicIngredientService.getAllBasicIngredients();
+        model.addAttribute("basicIngredientsList", basicIngredientList);
+        return "ingredients";
+    }
 
+
+    // REST
     @GetMapping("/all")
     public ResponseEntity<List<BasicIngredient>> getAllBasicIngredients() {
         List<BasicIngredient> basicIngredients = basicIngredientService.getAllBasicIngredients();

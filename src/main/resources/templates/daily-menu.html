@@ -1,12 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Daily Menu</title>
-    <script src="/js/script.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}">
 </head>
 <body>
-<button id="fetchMenus">Fetch Daily Menus</button>
-<div id="menuContainer"></div>
+<div style="margin-left: 250px;">
+    <div class="sidebar">
+        <a th:href="@{/daily-menu}">Daily Menu</a>
+        <a th:href="@{/recipe}">Recipes</a>
+        <a th:href="@{/ingredients}">Basic Ingredients</a>
+    </div>
+    <H1 style="margin-top: 20px; margin-bottom: 20px">Daily menu</H1>
+    <div class="col-4">
+        <table class="table table-dark table-striped">
+            <thead>
+            <tr>
+                <th scope="col" class="col-1">Id</th>
+                <th scope="col" class="col-2">Date</th>
+                <th scope="col" class="col-1"></th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="dailyMenu : ${dailyMenus}">
+                <td th:text="${dailyMenu.dailyMenuId}"></td>
+                <td th:text="${dailyMenu.date}"></td>
+                <td>
+                    <form th:action="@{'/daily-menu/' + ${dailyMenu.dailyMenuId} + '/add-recipe/1'}" method="POST">
+                        <button type="submit" class="btn btn-outline-success">Add recipe 1</button>
+                    </form>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <form th:action="@{/daily-menu/add}" method="POST">
+        <button type="submit" class="btn btn-outline-primary">+ Add Daily Menu</button>
+    </form>
+</div>
+
 </body>
 </html>

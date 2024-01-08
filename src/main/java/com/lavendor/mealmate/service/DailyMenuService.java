@@ -21,9 +21,26 @@ public class DailyMenuService {
         this.recipeRepository = recipeRepository;
     }
 
-    public DailyMenu createDailyMenu(LocalDate date) {
-        DailyMenu dailyMenu = new DailyMenu(date);
+    public DailyMenu createDailyMenu() {
+        DailyMenu dailyMenu = new DailyMenu(getNewDate());
         return dailyMenuRepository.save(dailyMenu);
+    }
+
+    public LocalDate getNewDate(){
+        List<DailyMenu> dailyMenus = dailyMenuRepository.findAll();
+
+        LocalDate lastDate;
+        if(!dailyMenus.isEmpty()){
+            lastDate = dailyMenus.stream()
+                    .map(DailyMenu::getDate)
+                    .max(LocalDate::compareTo)
+                    .orElse(LocalDate.now());
+            return lastDate.plusDays(1);
+        }else{
+            return LocalDate.now();
+        }
+
+
     }
 
     public boolean addRecipeToDailyMenu(Long dailyMenuId, Long recipeId) {
