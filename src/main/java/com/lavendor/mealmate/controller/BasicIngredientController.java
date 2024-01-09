@@ -28,6 +28,7 @@ public class BasicIngredientController {
     public String getBasicIngredientsPage(Model model) {
         List<BasicIngredient> basicIngredientList = basicIngredientService.getAllBasicIngredients();
         model.addAttribute("basicIngredientsList", basicIngredientList);
+        model.addAttribute("currentPage", "ingredients");
         return "ingredients";
     }
 

@@ -5,6 +5,7 @@ import com.lavendor.mealmate.service.RecipeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,8 @@ public class RecipeController {
     }
 
     @GetMapping()
-    public String getRecipePage(){
+    public String getRecipePage(Model model){
+        model.addAttribute("currentPage", "recipe");
         return "recipe";
     }
 

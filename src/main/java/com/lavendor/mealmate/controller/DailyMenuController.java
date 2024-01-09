@@ -25,6 +25,7 @@ public class DailyMenuController {
     public  String getDailyMenuPage(Model model){
         List<DailyMenu> dailyMenus = dailyMenuService.getAllDailyMenu();
         model.addAttribute("dailyMenus", dailyMenus);
+        model.addAttribute("currentPage", "daily-menu");
         return "daily-menu";
     }
 

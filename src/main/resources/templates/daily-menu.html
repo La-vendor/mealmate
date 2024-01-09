@@ -7,40 +7,40 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}">
 </head>
-<body>
+<body style="background-color: #f0f0f0;">
+<div class="sidebar">
+    <a th:href="@{/daily-menu}" th:class="${currentPage == 'daily-menu' ? 'active' : ''}">Daily Menu</a>
+    <a th:href="@{/recipe}" th:class="${currentPage == 'recipe' ? 'active' : ''}">Recipes</a>
+    <a th:href="@{/ingredients}" th:class="${currentPage == 'ingredients' ? 'active' : ''}">Basic Ingredients</a>
+</div>
 <div style="margin-left: 250px;">
-    <div class="sidebar">
-        <a th:href="@{/daily-menu}">Daily Menu</a>
-        <a th:href="@{/recipe}">Recipes</a>
-        <a th:href="@{/ingredients}">Basic Ingredients</a>
-    </div>
-    <H1 style="margin-top: 20px; margin-bottom: 20px">Daily menu</H1>
-    <div class="col-4">
-        <table class="table table-dark table-striped">
-            <thead>
-            <tr>
-                <th scope="col" class="col-1">Id</th>
-                <th scope="col" class="col-2">Date</th>
-                <th scope="col" class="col-1"></th>
-            </tr>
-            </thead>
-            <tbody class="table-group-divider">
-            <tr th:each="dailyMenu : ${dailyMenus}">
-                <td th:text="${dailyMenu.dailyMenuId}"></td>
-                <td th:text="${dailyMenu.date}"></td>
-                <td>
-                    <form th:action="@{'/daily-menu/' + ${dailyMenu.dailyMenuId} + '/add-recipe/1'}" method="POST">
-                        <button type="submit" class="btn btn-outline-success">Add recipe 1</button>
+    <H1 style="margin-top: 20px; margin-bottom: 40px">Daily menu</H1>
+</div>
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch">
+        <div class="col-md-2" th:each="dailyMenu : ${dailyMenus}">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center" th:text="${#temporals.format(dailyMenu.date, 'EEEE', new java.util.Locale('en'))}"></h5>
+                    <p class="card-text text-center" th:text="${dailyMenu.date}"></p>
+                    <form th:action="@{'/daily-menu/' + ${dailyMenu.dailyMenuId} + '/add-recipe/1'}"
+                          method="POST">
+                        <button type="submit" class="btn btn-outline-success btn-sm">Add recipe 1</button>
                     </form>
-                </td>
-
-            </tr>
-            </tbody>
-        </table>
+                    <form th:action="@{'/daily-menu/' + ${dailyMenu.dailyMenuId} + '/add-recipe/2'}"
+                          method="POST">
+                        <button type="submit" class="btn btn-outline-success btn-sm">Add recipe 2</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 d-flex">
+            <form th:action="@{/daily-menu/add}" method="POST" class="align-self-stretch w-100">
+                <button type="submit" class="btn btn-outline-secondary btn-lg w-100 h-100 btn-add-daily-menu">
+                    <img th:src="@{/images/plus.png}" alt="add" class="btn-img"/>Add Daily Menu</button>
+            </form>
+        </div>
     </div>
-    <form th:action="@{/daily-menu/add}" method="POST">
-        <button type="submit" class="btn btn-outline-primary">+ Add Daily Menu</button>
-    </form>
 </div>
 
 </body>

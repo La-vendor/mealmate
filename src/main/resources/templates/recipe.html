@@ -10,9 +10,9 @@
 <body>
 <div style="margin-left: 250px;">
     <div class="sidebar">
-        <a th:href="@{/daily-menu}">Daily Menu</a>
-        <a th:href="@{/recipe}">Recipes</a>
-        <a th:href="@{/ingredients}">Basic Ingredients</a>
+        <a th:href="@{/daily-menu}" th:class="${currentPage == 'daily-menu' ? 'active' : ''}">Daily Menu</a>
+        <a th:href="@{/recipe}" th:class="${currentPage == 'recipe' ? 'active' : ''}">Recipes</a>
+        <a th:href="@{/ingredients}" th:class="${currentPage == 'ingredients' ? 'active' : ''}">Basic Ingredients</a>
     </div>
     <H1 style="margin-top: 20px; margin-bottom: 20px">Recipes</H1>
 </div>
