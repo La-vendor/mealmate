@@ -32,15 +32,14 @@
         .card {
             width: 100%;
             height: 100%;
-            max-width: 200px;
+            max-width: 250px;
+            border: 2px solid #000;
         }
         .card-title {
             text-transform: uppercase;
         }
 
-        .btn-add-daily-menu {
-            min-height: 150px;
-        }
+
         .btn-add-daily-menu {
             min-height: 150px;
             display: flex;
@@ -48,9 +47,30 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            width: 250px;
+            width: 100%;
         }
 
         .btn-img {
-            max-width: 50px; /* Adjust the image size */
-            margin-bottom: 10px; /* Add some space between image and text */
+            max-width: 50px;
+            margin-bottom: 10px;
+        }
+        .btn-close {
+            border: 2px solid #000;
+            border-radius: 20%;
+            padding: 4px;
+            margin: 3px;
+            background-color: transparent;
+            color: black;
+        }
+        .btn-close:hover {
+            background-color: #a11212;
+        }
+
+        .recipe-dropdown {
+            width: 50px; /* Adjust width as needed */
+        }
+
+        .recipe-dropdown option {
+            white-space: normal; /* Allow text to wrap within options */
         }

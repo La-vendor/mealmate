@@ -26,6 +26,8 @@ public class RecipeController {
 
     @GetMapping()
     public String getRecipePage(Model model){
+        List<Recipe> recipeList = recipeService.getAllRecipes();
+        model.addAttribute("recipeList", recipeList);
         model.addAttribute("currentPage", "recipe");
         return "recipe";
     }

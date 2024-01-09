@@ -42,7 +42,7 @@ INSERT INTO recipes (recipe_name) VALUES ('Tomato soup(thick)');
 INSERT INTO recipes (recipe_name) VALUES ('Bao buns with chicken');
 INSERT INTO recipes (recipe_name) VALUES ('Chicken Wings');
 INSERT INTO recipes (recipe_name) VALUES ('Gnocchi in cream sauce');
-INSERT INTO recipes (recipe_name) VALUES ('Thai curry noodles with vegetables');
+INSERT INTO recipes (recipe_name) VALUES ('Curry noodles & vegetables');
 
 
 --Inserting Recipe Ingredients

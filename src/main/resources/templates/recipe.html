@@ -8,13 +8,33 @@
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}">
 </head>
 <body>
+
+<div class="sidebar">
+    <a th:href="@{/daily-menu}" th:class="${currentPage == 'daily-menu' ? 'active' : ''}">Daily Menu</a>
+    <a th:href="@{/recipe}" th:class="${currentPage == 'recipe' ? 'active' : ''}">Recipes</a>
+    <a th:href="@{/ingredients}" th:class="${currentPage == 'ingredients' ? 'active' : ''}">Basic Ingredients</a>
+</div>
+
 <div style="margin-left: 250px;">
-    <div class="sidebar">
-        <a th:href="@{/daily-menu}" th:class="${currentPage == 'daily-menu' ? 'active' : ''}">Daily Menu</a>
-        <a th:href="@{/recipe}" th:class="${currentPage == 'recipe' ? 'active' : ''}">Recipes</a>
-        <a th:href="@{/ingredients}" th:class="${currentPage == 'ingredients' ? 'active' : ''}">Basic Ingredients</a>
-    </div>
     <H1 style="margin-top: 20px; margin-bottom: 20px">Recipes</H1>
+    <div>
+        <div class="col-3">
+            <table class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th scope="col" class="col-1">Id</th>
+                    <th scope="col" class="col-2">Name</th>
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                <tr th:each="recipe : ${recipeList}">
+                    <td th:text="${recipe.recipeId}"></td>
+                    <td th:text="${recipe.recipeName}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 </body>

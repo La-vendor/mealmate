@@ -18,30 +18,55 @@
 </div>
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch">
-        <div class="col-md-2" th:each="dailyMenu : ${dailyMenus}">
+        <div class="col-md-3" th:each="dailyMenu : ${dailyMenus}">
             <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-center" th:text="${#temporals.format(dailyMenu.date, 'EEEE', new java.util.Locale('en'))}"></h5>
+                <div class="card-body d-flex flex-column">
+                    <!--Close button-->
+                    <form th:action="@{'/daily-menu/delete/' + ${dailyMenu.dailyMenuId}}" method="POST">
+                        <button type="submit" class="btn-close position-absolute top-0 end-0"
+                                aria-label="Close"></button>
+                    </form>
+
+                    <h5 class="card-title text-center"
+                        th:text="${#temporals.format(dailyMenu.date, 'EEEE', new java.util.Locale('en'))}"></h5>
                     <p class="card-text text-center" th:text="${dailyMenu.date}"></p>
-                    <form th:action="@{'/daily-menu/' + ${dailyMenu.dailyMenuId} + '/add-recipe/1'}"
-                          method="POST">
-                        <button type="submit" class="btn btn-outline-success btn-sm">Add recipe 1</button>
+                    <!--Selected recipes-->
+                    <ul class="list-group">
+                        <th:block th:each="recipe : ${dailyMenu.recipeList}">
+                            <li class="list-group-item list-group-item-dark" th:text="${recipe.recipeName}">
+                                Recipe Name
+                            </li>
+                        </th:block>
+                    </ul>
+                    <!--Recipe dropdown-->
+                    <form th:action="@{'/daily-menu/' + ${dailyMenu.dailyMenuId} + '/add-recipe'}" method="post"
+                          class="mt-auto">
+                        <div class="form-group mt-3">
+                            <select class="form-select" id="selectedRecipeId" name="selectedRecipeId">
+                                <option value="" selected>Select a Recipe</option>
+                                <option th:each="recipe : ${recipeList}"
+                                        th:value="${recipe.recipeId}"
+                                        th:text="${recipe.recipeName}">
+                                </option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary mt-1" type="submit">Submit</button>
                     </form>
-                    <form th:action="@{'/daily-menu/' + ${dailyMenu.dailyMenuId} + '/add-recipe/2'}"
-                          method="POST">
-                        <button type="submit" class="btn btn-outline-success btn-sm">Add recipe 2</button>
-                    </form>
+
+
                 </div>
             </div>
         </div>
         <div class="col-md-2 d-flex">
             <form th:action="@{/daily-menu/add}" method="POST" class="align-self-stretch w-100">
                 <button type="submit" class="btn btn-outline-secondary btn-lg w-100 h-100 btn-add-daily-menu">
-                    <img th:src="@{/images/plus.png}" alt="add" class="btn-img"/>Add Daily Menu</button>
+                    <img th:src="@{/images/plus.png}" alt="add" class="btn-img"/>Add Daily Menu
+                </button>
             </form>
         </div>
     </div>
 </div>
+
 
 </body>
 </html>
