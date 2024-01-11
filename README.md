@@ -58,3 +58,8 @@ The Meal Planner application is a Java-based web application built with the Spri
    <img src='shopping-list.png' width='350'>
    
    - Download shopping list in PDF. - _TO DO_
+
+## Options for future
+
+* migrate from H2 to PostgeSQL
+* deploy application in cloud service like Railway or Heroku
