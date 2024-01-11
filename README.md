@@ -32,19 +32,19 @@ The Meal Planner application is a Java-based web application built with the Spri
 
 2. **Ingredients Management:**
 
-   - Navigate to the "Recipes" section to manage your recipes.
+   - Navigate to the "Ingredients" tab to manage your ingredients.
    - Add new Ingredients.  - _TO DO_
    - Add new Ingredients from external API.  - _TO DO_
 
 3. **Recipe Management:**
 
-   - Navigate to the "Recipes" section to manage your recipes.
+   - Navigate to the "Recipes" tab to manage your recipes.
    - Add new recipes with ingredients. - _TO DO_
     
 4. **Meal Planning:**
 
     - Go to the "Meal Planner" section to plan your meals for the upcoming week or month.
-   - Download Meal Plan in PDF. - _TO DO_
+    - Download Meal Plan in PDF. - _TO DO_
 
 5. **Generate Shopping List:**
 
