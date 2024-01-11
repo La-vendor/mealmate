@@ -1,20 +1,21 @@
 package com.lavendor.mealmate.controller;
 
+import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.model.DailyMenu;
-import com.lavendor.mealmate.model.RecipeIngredient;
 import com.lavendor.mealmate.model.ShoppingList;
 import com.lavendor.mealmate.service.DailyMenuService;
 import com.lavendor.mealmate.service.ShoppingListService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/shopping-list")
@@ -28,37 +29,40 @@ public class ShoppingListController {
         this.dailyMenuService = dailyMenuService;
     }
 
+    @GetMapping()
+    public String getRecipePage(Model model){
+        Map<BasicIngredient,Double> ingredientQuantityMap = shoppingListService.getShoppingListMap(1L);
+        model.addAttribute("ingredientQuantityMap", ingredientQuantityMap);
+        model.addAttribute("currentPage", "shopping-list");
+        return "shopping-list";
+    }
 
 
     @GetMapping("/generate")
-    public ResponseEntity<?> generateShoppingList(){
+    public String generateShoppingList(){
         List<DailyMenu> dailyMenus = dailyMenuService.getAllDailyMenu();
+        ShoppingList shoppingList = shoppingListService.generateOrUpdateShoppingList("temp",dailyMenus );
 
-        try{
-            ShoppingList shoppingList = shoppingListService.generateShoppingList("temp",dailyMenus );
-            return ResponseEntity.ok(shoppingList);
-        }catch(RuntimeException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Shopping list generation failed: " + e.getMessage());
-        }
+        return "redirect:/shopping-list";
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<List<RecipeIngredient>> getRecipeIngredientsFromShoppingList(@PathVariable("id") Long shoppingListId){
-        List<RecipeIngredient> recipeIngredients = shoppingListService.getRecipeIngredientsForShoppingList(shoppingListId);
-        if(recipeIngredients!=null){
-            return ResponseEntity.ok(recipeIngredients);
+    public ResponseEntity<Map<BasicIngredient, Double>> getElementsFromShoppingList(@PathVariable("id") Long shoppingListId){
+        Map<BasicIngredient, Double> shoppingListElements = shoppingListService.getShoppingListMap(shoppingListId);
+        if(shoppingListElements!=null){
+            return ResponseEntity.ok(shoppingListElements);
         }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyMap());
         }
     }
-    @GetMapping("/merged/{id}")
-    public ResponseEntity<List<RecipeIngredient>> getMergedShoppingList(@PathVariable("id") Long shoppingListId){
-        List<ShoppingList> shoppingLists = shoppingListService.getAllShoppingLists();
-
-        List<RecipeIngredient> mergedIngredients = shoppingListService.getMergedShoppingList(shoppingListId);
-
-        return ResponseEntity.ok(mergedIngredients);
-    }
+//    @GetMapping("/merged/{id}")
+//    public ResponseEntity<List<RecipeIngredient>> getMergedShoppingList(@PathVariable("id") Long shoppingListId){
+//        List<ShoppingList> shoppingLists = shoppingListService.getAllShoppingLists();
+//
+//        List<RecipeIngredient> mergedIngredients = shoppingListService.getMergedShoppingList(shoppingListId);
+//
+//        return ResponseEntity.ok(mergedIngredients);
+//    }
 
     @GetMapping("/all")
     public ResponseEntity<List<ShoppingList>> getAllShoppingLists(){

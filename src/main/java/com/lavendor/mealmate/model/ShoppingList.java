@@ -2,7 +2,7 @@ package com.lavendor.mealmate.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "shopping_lists")
@@ -14,24 +14,33 @@ public class ShoppingList {
     private String name;
     private Long userId;
 
-    @ManyToMany
-    @JoinTable(
+    @ElementCollection
+    @CollectionTable(
             name = "shopping_list_ingredients",
-            joinColumns = @JoinColumn(name = "shopping_list_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+            joinColumns = @JoinColumn(name = "shopping_list_id")
     )
-    private List<RecipeIngredient> recipeIngredients;
+    @MapKeyJoinColumn(name = "ingredient_id")
+    @Column(name = "quantity")
+    private Map<BasicIngredient, Double> ingredientQuantityMap;
 
     public ShoppingList() {
     }
 
-    public ShoppingList(String name, List<RecipeIngredient> recipeIngredients){
+    public ShoppingList(String name, Map<BasicIngredient, Double> ingredientQuantityMap){
         this.name = name;
-        this.recipeIngredients = recipeIngredients;
+        this.ingredientQuantityMap = ingredientQuantityMap;
     }
 
-    public void addRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
-        this.recipeIngredients.addAll(recipeIngredients);
+    public void addShoppingListElement(Map<BasicIngredient, Double> additionalShoppingListElements) {
+        this.ingredientQuantityMap.putAll(additionalShoppingListElements);
+    }
+
+    public Long getShoppingListId() {
+        return shoppingListId;
+    }
+
+    public void setShoppingListId(Long shoppingListId) {
+        this.shoppingListId = shoppingListId;
     }
 
     public String getName() {
@@ -50,11 +59,11 @@ public class ShoppingList {
         this.userId = userId;
     }
 
-    public List<RecipeIngredient> getRecipeIngredients() {
-        return recipeIngredients;
+    public Map<BasicIngredient, Double> getIngredientQuantityMap() {
+        return ingredientQuantityMap;
     }
 
-    public void setRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
-        this.recipeIngredients = recipeIngredients;
+    public void setIngredientQuantityMap(Map<BasicIngredient, Double> ingredientQuantityMap) {
+        this.ingredientQuantityMap = ingredientQuantityMap;
     }
 }

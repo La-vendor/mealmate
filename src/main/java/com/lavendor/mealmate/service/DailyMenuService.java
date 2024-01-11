@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class DailyMenuService {
@@ -58,6 +59,14 @@ public class DailyMenuService {
             }
         }
         return false;
+    }
+
+    public void deleteRecipeFromDailyMenu(Long dailyMenuId, Long recipeId){
+        DailyMenu dailyMenu = dailyMenuRepository.findById(dailyMenuId).orElseThrow(() -> new EntityNotFoundException("DailyMenu not found"));
+        List<Recipe> recipeList = dailyMenu.getRecipeList();
+        recipeList.removeIf(recipe -> Objects.equals(recipe.getRecipeId(), recipeId));
+        dailyMenu.setRecipeList(recipeList);
+        dailyMenuRepository.save(dailyMenu);
     }
 
     public DailyMenu getDailyMenuById(Long dailyMenuId) {

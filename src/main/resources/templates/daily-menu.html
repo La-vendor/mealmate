@@ -7,42 +7,47 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}">
 </head>
-<body style="background-color: #f0f0f0;">
-<div class="sidebar">
-    <a th:href="@{/daily-menu}" th:class="${currentPage == 'daily-menu' ? 'active' : ''}">Daily Menu</a>
-    <a th:href="@{/recipe}" th:class="${currentPage == 'recipe' ? 'active' : ''}">Recipes</a>
-    <a th:href="@{/ingredients}" th:class="${currentPage == 'ingredients' ? 'active' : ''}">Basic Ingredients</a>
+<body>
+<!--Sidebar-->
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
+<div class="container" style="margin-bottom: 20px; margin-top: 20px;">
+    <H2>Daily menu</H2>
 </div>
-<div style="margin-left: 250px;">
-    <H1 style="margin-top: 20px; margin-bottom: 40px">Daily menu</H1>
-</div>
-<div class="container">
+<div class="container" style="align-items: center;">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch">
         <div class="col-md-3" th:each="dailyMenu : ${dailyMenus}">
-            <div class="card shadow-sm">
+            <div class="card text-center shadow-sm">
+                <div class="card-header">
+                    <h5 class="card-title reduced-width"
+                        th:text="${#temporals.format(dailyMenu.date, 'EEEE', new java.util.Locale('en'))}"></h5>
+                    <p class="card-text text-center" th:text="${dailyMenu.date}"></p>
+                </div>
                 <div class="card-body d-flex flex-column">
                     <!--Close button-->
                     <form th:action="@{'/daily-menu/delete/' + ${dailyMenu.dailyMenuId}}" method="POST">
                         <button type="submit" class="btn-close position-absolute top-0 end-0"
                                 aria-label="Close"></button>
                     </form>
-
-                    <h5 class="card-title text-center"
-                        th:text="${#temporals.format(dailyMenu.date, 'EEEE', new java.util.Locale('en'))}"></h5>
-                    <p class="card-text text-center" th:text="${dailyMenu.date}"></p>
                     <!--Selected recipes-->
                     <ul class="list-group">
                         <th:block th:each="recipe : ${dailyMenu.recipeList}">
-                            <li class="list-group-item list-group-item-dark" th:text="${recipe.recipeName}">
-                                Recipe Name
+                            <li class="list-group-item list-group-item-dark"
+                                style="position: relative; display: flex; align-items: center;">
+                                <span th:text="${recipe.recipeName}" style="position: left: 0;">Recipe Name</span>
+                                <form th:action="@{'/daily-menu/' + ${dailyMenu.dailyMenuId} +'/delete-recipe/' + ${recipe.recipeId}}"
+                                      method="post" style="position: absolute;  right: 0;">
+                                    <button type="submit" class="btn-close" aria-label="Close"></button>
+                                </form>
                             </li>
                         </th:block>
                     </ul>
                     <!--Recipe dropdown-->
                     <form th:action="@{'/daily-menu/' + ${dailyMenu.dailyMenuId} + '/add-recipe'}" method="post"
                           class="mt-auto">
-                        <div class="form-group mt-3">
-                            <select class="form-select" id="selectedRecipeId" name="selectedRecipeId">
+                        <div class="form-group form-select-sm mt-3">
+                            <select class="form-select selected-recipe" id="selectedRecipeId" name="selectedRecipeId" onchange="toggleButton(this)">
                                 <option value="" selected>Select a Recipe</option>
                                 <option th:each="recipe : ${recipeList}"
                                         th:value="${recipe.recipeId}"
@@ -50,23 +55,54 @@
                                 </option>
                             </select>
                         </div>
-                        <button class="btn btn-primary mt-1" type="submit">Submit</button>
+                        <button class="btn btn-primary btn-sm mt-1 add-button" type="submit" disabled>Add</button>
                     </form>
 
 
                 </div>
             </div>
         </div>
-        <div class="col-md-2 d-flex">
-            <form th:action="@{/daily-menu/add}" method="POST" class="align-self-stretch w-100">
-                <button type="submit" class="btn btn-outline-secondary btn-lg w-100 h-100 btn-add-daily-menu">
+        <div class="col-md-2 d-flex justify-content-center align-items-center">
+            <form th:action="@{/daily-menu/add}" method="POST">
+                <button type="submit" class="btn btn-outline-secondary btn-add-daily-menu">
                     <img th:src="@{/images/plus.png}" alt="add" class="btn-img"/>Add Daily Menu
                 </button>
             </form>
         </div>
     </div>
 </div>
+<div class="container" style="margin-top: 20px;">
+    <div class="d-grid gap-2" style="margin: 10px;">
+        <form th:action="@{/shopping-list/generate}" method="GET" style="margin-top=20px;">
+            <button type="submit" class="btn btn-primary generateShoppingListBtn"  disabled>Generate Shopping List</button>
+        </form>
+    </div>
+</div>
+<script th:src="@{/js/jquery-slim.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
 
+<script>
+    function toggleButton(selectElement) {
+        const addButton = selectElement.closest('form').querySelector('.add-button');
+        addButton.disabled = (selectElement.value === "");
+    }
 
+    document.querySelectorAll('.selected-recipe').forEach(function(select) {
+        toggleButton(select);
+        select.addEventListener('change', function() {
+            toggleButton(this);
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const recipeList = document.querySelectorAll('.list-group-item');
+
+        if (recipeList.length !== 0) {
+            const generateButton = document.querySelector('.generateShoppingListBtn');
+            generateButton.disabled = false;
+        }
+    });
+</script>
 </body>
 </html>

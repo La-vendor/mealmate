@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div class="sidebar" th:fragment="sidebar">
+<a th:href="@{/daily-menu}" th:class="${currentPage == 'daily-menu' ? 'active' : ''}">Daily Menu</a>
+<a th:href="@{/shopping-list}" th:class="${currentPage == 'shopping-list' ? 'active' : ''}">Shopping List</a>
+<a th:href="@{/recipe}" th:class="${currentPage == 'recipe' ? 'active' : ''}">Recipes</a>
+<a th:href="@{/ingredients}" th:class="${currentPage == 'ingredients' ? 'active' : ''}">Basic Ingredients</a>
+</div>
+</html>

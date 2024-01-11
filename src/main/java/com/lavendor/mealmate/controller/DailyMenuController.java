@@ -26,7 +26,7 @@ public class DailyMenuController {
     }
 
     @GetMapping()
-    public  String getDailyMenuPage(Model model){
+    public String getDailyMenuPage(Model model) {
         List<DailyMenu> dailyMenus = dailyMenuService.getAllDailyMenu();
         List<Recipe> recipeList = recipeService.getAllRecipes();
         model.addAttribute("recipeList", recipeList);
@@ -43,20 +43,25 @@ public class DailyMenuController {
         return "redirect:/daily-menu";
     }
 
-       @PostMapping("/{dailyMenuId}/add-recipe")
-    public String addRecipeToDailyMenu(
-            @PathVariable("dailyMenuId") Long dailyMenuId,
-            @RequestParam("selectedRecipeId") Long  selectedRecipeId){
+    @PostMapping("/{dailyMenuId}/add-recipe")
+    public String addRecipeToDailyMenu(@PathVariable("dailyMenuId") Long dailyMenuId,
+                                       @RequestParam("selectedRecipeId") Long selectedRecipeId) {
 
-        boolean recipeAdded = dailyMenuService.addRecipeToDailyMenu(dailyMenuId,selectedRecipeId);
+        boolean recipeAdded = dailyMenuService.addRecipeToDailyMenu(dailyMenuId, selectedRecipeId);
+        return "redirect:/daily-menu";
+    }
 
-        return  "redirect:/daily-menu";
+    @PostMapping("/{dailyMenuId}/delete-recipe/{recipeId}")
+    public String deleteRecipeFromDailyMenu(@PathVariable("dailyMenuId") Long dailyMenuId,
+                                            @PathVariable("recipeId") Long selectedRecipeId) {
+        dailyMenuService.deleteRecipeFromDailyMenu(dailyMenuId, selectedRecipeId);
+        return "redirect:/daily-menu";
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteDailyMenu(@PathVariable("id") Long id){
+    public String deleteDailyMenu(@PathVariable("id") Long id) {
         dailyMenuService.deleteDailyMenu(id);
-        return  "redirect:/daily-menu";
+        return "redirect:/daily-menu";
     }
 
     @GetMapping("/all")
