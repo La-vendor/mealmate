@@ -25,10 +25,12 @@ The Meal Planner application is a Java-based web application built with the Spri
 2. Open the project in your preferred IDE.
 3. Run the application:
 ``mvn spring-boot:run``
+4. Access the application at http://localhost:8080/daily-menu
 ### Usage
 1. **Register/Login:**
    
    - Create a new account or log in if you already have one. - _TO DO_
+     
 
 2. **Ingredients Management:**
 
@@ -42,11 +44,17 @@ The Meal Planner application is a Java-based web application built with the Spri
    - Add new recipes with ingredients. - _TO DO_
     
 4. **Meal Planning:**
-
-    - Go to the "Meal Planner" section to plan your meals for the upcoming week or month.
+   
+   - Go to the "Meal Planner" section to plan your meals for the upcoming week or month.
+   
+   <img src='daily-menu.png' width='700'>
+   
     - Download Meal Plan in PDF. - _TO DO_
 
-5. **Generate Shopping List:**
-
-   - Once meals are planned, visit the "Shopping List" section to automatically generate a shopping list.
+7. **Generate Shopping List:**
+  
+   - Once meals are planned, you can generate shopping list, that includes aggregated ingredients from all selected recipes.
+     
+   <img src='shopping-list.png' width='350'>
+   
    - Download shopping list in PDF. - _TO DO_
