@@ -28,7 +28,7 @@ public class ShoppingListService {
 
         shoppingList = optionalShoppingList.orElseGet(() -> new ShoppingList(name, new HashMap<>()));
 
-        shoppingList.setIngredientQuantityMap(mergeIngredients(shoppingList.getIngredientQuantityMap(), recipeIngredients));
+        shoppingList.setIngredientQuantityMap(mergeIngredients(new HashMap<>(), recipeIngredients));
         return shoppingListRepository.save(shoppingList);
     }
 
