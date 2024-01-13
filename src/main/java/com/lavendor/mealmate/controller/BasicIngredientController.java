@@ -2,15 +2,15 @@ package com.lavendor.mealmate.controller;
 
 import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.service.BasicIngredientService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -27,9 +27,25 @@ public class BasicIngredientController {
     @GetMapping()
     public String getBasicIngredientsPage(Model model) {
         List<BasicIngredient> basicIngredientList = basicIngredientService.getAllBasicIngredients();
+        basicIngredientList.sort(Comparator.comparing(BasicIngredient::getBasicIngredientName, String.CASE_INSENSITIVE_ORDER));
+
         model.addAttribute("basicIngredientsList", basicIngredientList);
         model.addAttribute("currentPage", "ingredients");
         return "ingredients";
+    }
+
+    @PostMapping("/new-ingredient")
+    public String addNewIngredient(@ModelAttribute BasicIngredient basicIngredient) {
+        try {
+            BasicIngredient existingIngredient = basicIngredientService.getBasicIngredientByName(basicIngredient.getBasicIngredientName());
+
+            if (existingIngredient == null) {
+                basicIngredientService.addBasicIngredient(basicIngredient.getBasicIngredientName(), basicIngredient.getUnit());
+            }
+        } catch (EntityNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return "redirect:/ingredients";
     }
 
 

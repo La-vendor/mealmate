@@ -1,6 +1,8 @@
 package com.lavendor.mealmate.controller;
 
+import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.model.Recipe;
+import com.lavendor.mealmate.service.BasicIngredientService;
 import com.lavendor.mealmate.service.RecipeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +21,18 @@ import java.util.List;
 public class RecipeController {
 
     private final RecipeService recipeService;
+    private final BasicIngredientService basicIngredientService;
 
-    public RecipeController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService, BasicIngredientService basicIngredientService) {
         this.recipeService = recipeService;
+        this.basicIngredientService = basicIngredientService;
     }
 
     @GetMapping()
     public String getRecipePage(Model model){
         List<Recipe> recipeList = recipeService.getAllRecipes();
+        List<BasicIngredient> ingredientList = basicIngredientService.getAllBasicIngredients();
+        model.addAttribute("ingredientList", ingredientList);
         model.addAttribute("recipeList", recipeList);
         model.addAttribute("currentPage", "recipe");
         return "recipe";

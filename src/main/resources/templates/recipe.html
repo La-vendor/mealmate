@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Recipes</title>
@@ -7,6 +8,7 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}">
 </head>
+
 <body>
 
 <!--Sidebar-->
@@ -15,7 +17,7 @@
     <H2>Recipes</H2>
 </div>
 <div class="container">
-    <div>
+    <div class="row">
         <div class="col-3">
             <table class="table table-striped">
                 <thead>
@@ -31,6 +33,22 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="col-6">
+            <form th:action="@{/recipes/add}" method="post">
+                <div class="mb-3">
+                    <label for="newRecipeName" class="form-label">Recipe Name</label>
+                    <input type="text" class="form-control" id="newRecipeName" name="newRecipeName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ingredients" class="form-label">Ingredients</label>
+                    <select multiple class="form-select" id="ingredients" name="ingredients" required>
+                        <!-- Dynamically populate ingredient options -->
+                        <option th:each="ingredient : ${ingredientList}" th:value="${ingredient.basicIngredientId}" th:text="${ingredient.basicIngredientName}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Recipe</button>
+            </form>
         </div>
     </div>
 </div>

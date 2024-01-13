@@ -12,6 +12,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     private String username;
+    private String salt;
+    private String password;
 
 
     @ManyToMany
@@ -27,5 +29,45 @@ public class User {
 
     public User(String username) {
         this.username = username;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<DailyMenu> getDailyMenus() {
+        return dailyMenus;
+    }
+
+    public void setDailyMenus(List<DailyMenu> dailyMenus) {
+        this.dailyMenus = dailyMenus;
     }
 }

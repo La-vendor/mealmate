@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/shopping-list")
@@ -32,7 +35,14 @@ public class ShoppingListController {
     @GetMapping()
     public String getRecipePage(Model model){
         Map<BasicIngredient,Double> ingredientQuantityMap = shoppingListService.getShoppingListMap(1L);
-        model.addAttribute("ingredientQuantityMap", ingredientQuantityMap);
+
+        Map<BasicIngredient, Double> sortedIngredientQuantityMap = ingredientQuantityMap.entrySet()
+                .stream()
+                .sorted(Comparator.comparing(entry -> entry.getKey().getBasicIngredientName(), String.CASE_INSENSITIVE_ORDER))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+
+        model.addAttribute("ingredientQuantityMap", sortedIngredientQuantityMap);
         model.addAttribute("currentPage", "shopping-list");
         return "shopping-list";
     }
