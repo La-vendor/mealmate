@@ -40,14 +40,37 @@
                     <label for="newRecipeName" class="form-label">Recipe Name</label>
                     <input type="text" class="form-control" id="newRecipeName" name="newRecipeName" required>
                 </div>
+
+                <!-- Temporary List for Selected Ingredients -->
+                <ul class="list-group">
+                    <li th:each="ingredient : ${temporaryIngredients}" class="list-group-item list-group-item-dark">
+                        <span th:text="${ingredient.basicIngredientName}"></span>
+                        <input type="hidden" name="selectedIngredients" th:value="${ingredient.basicIngredientId}">
+                    </li>
+                </ul>
+
+                <!-- Ingredient dropdown -->
                 <div class="mb-3">
-                    <label for="ingredients" class="form-label">Ingredients</label>
-                    <select multiple class="form-select" id="ingredients" name="ingredients" required>
-                        <!-- Dynamically populate ingredient options -->
-                        <option th:each="ingredient : ${ingredientList}" th:value="${ingredient.basicIngredientId}" th:text="${ingredient.basicIngredientName}"></option>
-                    </select>
+                    <form th:action="@{'/recipe/add-ingredient}" method="POST">
+                        <label for="ingredients" class="form-label">Ingredients</label>
+                        <div class="form-group">
+                            <select class="form-select" id="ingredients" name="ingredients"
+                                    onchange="addSelectedIngredient(this)">
+                                <option value="" selected>Select an Ingredient</option>
+                                <option th:each="ingredient : ${ingredientList}"
+                                        th:value="${ingredient.basicIngredientId}"
+                                        th:text="${ingredient.basicIngredientName}"></option>
+                            </select>
+
+                            <label for="newIngredientQuantity" class="form-label">Quantity</label>
+                            <input type="text" class="form-control" id="newIngredientQuantity" name="newIngredientQuantity"
+                                   required>
+                        </div>
+                        <button class="btn btn-primary btn-sm mt-1 add-button" type="submit" disabled>Add</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Recipe</button>
+
+                <button type="button" class="btn btn-primary" onclick="addIngredientsToRecipe()">Add Recipe</button>
             </form>
         </div>
     </div>

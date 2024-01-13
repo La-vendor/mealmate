@@ -35,7 +35,7 @@ The Meal Planner application is a Java-based web application built with the Spri
 2. **Ingredients Management:**
 
    - Navigate to the "Ingredients" tab to manage your ingredients.
-   - Add new Ingredients.  - _TO DO_
+   - Add new Ingredients.  - _DONE_
    - Add new Ingredients from external API.  - _TO DO_
 
 3. **Recipe Management:**
