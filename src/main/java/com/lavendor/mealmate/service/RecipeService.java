@@ -19,6 +19,9 @@ public class RecipeService {
 
     public Recipe createRecipe(String recipeName, List<RecipeIngredient> recipeIngredients){
         Recipe recipe = new Recipe(recipeName, recipeIngredients);
+        for(RecipeIngredient recipeIngredient : recipeIngredients){
+            recipeIngredient.setRecipe(recipe);
+        }
         return recipeRepository.save(recipe);
     }
 

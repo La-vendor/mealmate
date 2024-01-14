@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface BasicIngredientRepository extends JpaRepository<BasicIngredient, Long> {
 
     Optional<BasicIngredient> findByBasicIngredientNameIgnoreCase(String basicIngredientName);
+    boolean existsByBasicIngredientName(String basicIngredientName);
 }

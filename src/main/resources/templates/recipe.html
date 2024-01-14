@@ -18,63 +18,95 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-3">
+        <div class="col-md-4">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th scope="col" class="col-1">Id</th>
-                    <th scope="col" class="col-2">Name</th>
+                    <th scope="col" class="col-3">Name</th>
+                    <th scope="col" class="col-2"></th>
                 </tr>
                 </thead>
                 <tbody class="table-group-divider">
                 <tr th:each="recipe : ${recipeList}">
-                    <td th:text="${recipe.recipeId}"></td>
                     <td th:text="${recipe.recipeName}"></td>
+                    <td>
+                        <a id="view-ingredients" class="btn btn-primary"
+                           th:href="@{'/recipe/ingredients/' + ${recipe.recipeId}}">View Ingredients</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col-6">
-            <form th:action="@{/recipes/add}" method="post">
-                <div class="mb-3">
-                    <label for="newRecipeName" class="form-label">Recipe Name</label>
-                    <input type="text" class="form-control" id="newRecipeName" name="newRecipeName" required>
-                </div>
-
-                <!-- Temporary List for Selected Ingredients -->
-                <ul class="list-group">
-                    <li th:each="ingredient : ${temporaryIngredients}" class="list-group-item list-group-item-dark">
-                        <span th:text="${ingredient.basicIngredientName}"></span>
-                        <input type="hidden" name="selectedIngredients" th:value="${ingredient.basicIngredientId}">
-                    </li>
-                </ul>
-
-                <!-- Ingredient dropdown -->
-                <div class="mb-3">
-                    <form th:action="@{'/recipe/add-ingredient}" method="POST">
-                        <label for="ingredients" class="form-label">Ingredients</label>
-                        <div class="form-group">
-                            <select class="form-select" id="ingredients" name="ingredients"
-                                    onchange="addSelectedIngredient(this)">
-                                <option value="" selected>Select an Ingredient</option>
-                                <option th:each="ingredient : ${ingredientList}"
-                                        th:value="${ingredient.basicIngredientId}"
-                                        th:text="${ingredient.basicIngredientName}"></option>
-                            </select>
-
-                            <label for="newIngredientQuantity" class="form-label">Quantity</label>
-                            <input type="text" class="form-control" id="newIngredientQuantity" name="newIngredientQuantity"
-                                   required>
+        <div class="col-md-8">
+            <h3>Add recipe</h3>
+            <div class="row custom-border-row">
+                <div class="col-md-5">
+                    <form th:action="@{/recipe/add}" method="post">
+                        <div class="mb-3">
+                            <label for="newRecipeName" class="form-label">Recipe Name</label>
+                            <input type="text" class="form-control" id="newRecipeName" name="newRecipeName" required>
                         </div>
-                        <button class="btn btn-primary btn-sm mt-1 add-button" type="submit" disabled>Add</button>
+
+                        <!-- List for Selected Ingredients -->
+                        <ul class="list-group">
+                            <li th:each="ingredient : ${temporaryIngredients}"
+                                class="list-group-item list-group-item-dark">
+                                <span th:text="${ingredient.basicIngredient.basicIngredientName}"></span>
+                                <span th:text="${ingredient.quantity}"></span>
+                                <span th:text="${ingredient.basicIngredient.unit}"></span>
+                                <input type="hidden" name="selectedIngredients"
+                                       th:value="${ingredient.recipeIngredientId}">
+                            </li>
+                        </ul>
+                        <div class="mt-3 d-flex justify-content-between align-items-center">
+                            <button type="submit" class="btn btn-primary">Add Recipe</button>
+                            <a id="reset-recipe" class="btn btn-primary" th:href="@{/recipe/reset}">Reset
+                                Ingredients</a>
+                        </div>
+
                     </form>
                 </div>
+                <div class="col-md-5">
+                    <form th:action="@{/recipe/add-ingredient}" method="POST">
+                        <div class="mb-3">
+                            <label for="selectedIngredientId" class="form-label">Ingredients</label>
+                            <div class="form-group">
+                                <select class="form-select" id="selectedIngredientId" name="selectedIngredientId">
+                                    <option value="" selected>Select an Ingredient</option>
+                                    <option th:each="ingredient : ${basicIngredientList}"
+                                            th:value="${ingredient.basicIngredientId}"
+                                            th:text="${ingredient.basicIngredientName + ' (' + ingredient.unit + ')'}"></option>
+                                </select>
 
-                <button type="button" class="btn btn-primary" onclick="addIngredientsToRecipe()">Add Recipe</button>
-            </form>
+                                <label for="newIngredientQuantity" class="form-label">Quantity</label>
+                                <input type="text" class="form-control" id="newIngredientQuantity"
+                                       name="newIngredientQuantity"
+                                       required>
+                            </div>
+                            <button class="btn btn-primary btn-sm mt-1 add-button" type="submit">Add Ingredient</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<div class="container" style="margin-bottom: 20px; margin-top: 20px;">
+    <H2>Recipe Ingredients</H2>
+    <div class="row">
+        <div class="col-3">
+            <ul class="list-group">
+                <li th:each="ingredient : ${recipeIngredients}"
+                    class="list-group-item list-group-item-dark">
+                    <span th:text="${ingredient.basicIngredient.basicIngredientName}"></span>
+                    <span th:text="${ingredient.quantity}"></span>
+                    <span th:text="${ingredient.basicIngredient.unit}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

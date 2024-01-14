@@ -2,7 +2,6 @@ package com.lavendor.mealmate.controller;
 
 import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.service.BasicIngredientService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,15 +35,11 @@ public class BasicIngredientController {
 
     @PostMapping("/new-ingredient")
     public String addNewIngredient(@ModelAttribute BasicIngredient basicIngredient) {
-        try {
-            BasicIngredient existingIngredient = basicIngredientService.getBasicIngredientByName(basicIngredient.getBasicIngredientName());
 
-            if (existingIngredient == null) {
+            if (!basicIngredientService.checkIfIngredientExists(basicIngredient.getBasicIngredientName())) {
                 basicIngredientService.addBasicIngredient(basicIngredient.getBasicIngredientName(), basicIngredient.getUnit());
             }
-        } catch (EntityNotFoundException ex) {
-            ex.printStackTrace();
-        }
+
         return "redirect:/ingredients";
     }
 
