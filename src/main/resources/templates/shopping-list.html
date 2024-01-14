@@ -16,7 +16,7 @@
     <H2>Shopping List</H2>
 </div>
 <div class="container">
-    <div>
+    <div class="row">
         <div class="col-3">
             <table class="table table-striped">
                 <thead>
@@ -34,6 +34,12 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="col-3">
+            <form th:action="@{/shopping-list/pdf}" method="GET" style="margin-top=20px;">
+                <button type="submit" class="btn btn-primary generateShoppingListBtn" disabled>Save to PDF
+                </button>
+            </form>
         </div>
     </div>
 </div>
