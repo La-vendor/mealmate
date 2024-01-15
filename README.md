@@ -53,14 +53,11 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
 
     - Create a new account or log in if you already have one. - _TO DO_
 
-
 2. **Ingredients Management:**
 
     - Navigate to the "Ingredients" tab to manage your ingredients.
     - Add new Ingredients. - _DONE_
     - Add new Ingredients from external API. - _TO DO_
-
-<img src='basic-ingredient.png' width='700'>
 
 3. **Recipe Management:**
 
@@ -68,14 +65,10 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
     - Add new recipes with ingredients. - _DONE_
     - Display ingredients of selected recipe. - _DONE_
 
-<img src='recipe.png' width='700'>
-
 4. **Meal Planning:**
 
     - Go to the "Meal Planner" section to plan your meals for the upcoming week or month.
     - Download Meal Plan in PDF. - _DONE_
-
-<img src='daily-menu.png' width='700'>
 
 5. **Generate Shopping List:**
 
@@ -83,7 +76,23 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
       recipes.
     - Download shopping list in PDF. - _DONE_
 
+# Screenshots
+
+1. **Daily Menu**
+
+<img src='daily-menu.png' width='700'>
+   
+2. **Shopping List**
+
 <img src='shopping-list.png' width='350'>
+
+3. **Recipes**
+
+<img src='recipe.png' width='700'>
+
+4. **Basic Ingredients**
+
+<img src='basic-ingredient.png' width='700'>
 
 ## Options for future
 
