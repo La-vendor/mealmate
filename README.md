@@ -20,6 +20,7 @@ recipes.
 - **HTML/CSS**
 - **H2 Database**
 - **JavaScript**
+- **OpenPDF** - https://github.com/LibrePDF/OpenPDF
 
 ## Prerequisites
 
@@ -72,7 +73,7 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
 4. **Meal Planning:**
 
     - Go to the "Meal Planner" section to plan your meals for the upcoming week or month.
-    - Download Meal Plan in PDF. - _TO DO_
+    - Download Meal Plan in PDF. - _DONE_
 
 <img src='daily-menu.png' width='700'>
 

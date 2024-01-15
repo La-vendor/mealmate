@@ -1,15 +1,20 @@
 package com.lavendor.mealmate.controller;
 
+import com.lavendor.mealmate.exporter.DailyMenuPDFExporter;
 import com.lavendor.mealmate.model.DailyMenu;
 import com.lavendor.mealmate.model.Recipe;
 import com.lavendor.mealmate.service.DailyMenuService;
 import com.lavendor.mealmate.service.RecipeService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,6 +67,22 @@ public class DailyMenuController {
     public String deleteDailyMenu(@PathVariable("id") Long id) {
         dailyMenuService.deleteDailyMenu(id);
         return "redirect:/daily-menu";
+    }
+
+    @GetMapping(value = "/export-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public void exportShoppingListToPdf(HttpServletResponse response) throws IOException {
+        response.setContentType("application/pdf");
+
+        LocalDate localDate = LocalDate.now();
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=daily_menu_" + localDate + ".pdf";
+
+        response.setHeader(headerKey,headerValue);
+
+        List<DailyMenu> dailyMenus = dailyMenuService.getAllDailyMenu();
+        DailyMenuPDFExporter dailyMenuPDFExporter = new DailyMenuPDFExporter(dailyMenus);
+        dailyMenuPDFExporter.export(response);
+
     }
 
     @GetMapping("/all")
