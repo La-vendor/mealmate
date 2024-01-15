@@ -1,11 +1,14 @@
 package com.lavendor.mealmate.controller;
 
+import com.lavendor.mealmate.exporter.ShoppingListPDFExporter;
 import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.model.DailyMenu;
 import com.lavendor.mealmate.model.ShoppingList;
 import com.lavendor.mealmate.service.DailyMenuService;
 import com.lavendor.mealmate.service.ShoppingListService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -56,6 +57,24 @@ public class ShoppingListController {
         return "redirect:/shopping-list";
     }
 
+    @GetMapping(value = "/export-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public void exportShoppingListToPdf(HttpServletResponse response) throws IOException {
+        response.setContentType("application/pdf");
+
+        LocalDate localDate = LocalDate.now();
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=shopping_list_" + localDate + ".pdf";
+
+        response.setHeader(headerKey,headerValue);
+
+        ShoppingList shoppingList = shoppingListService.getShoppingListById(1L);
+        Map<BasicIngredient,Double> shoppingListMap = shoppingList.getIngredientQuantityMap();
+
+        ShoppingListPDFExporter shoppingListPDFExporter = new ShoppingListPDFExporter(shoppingListMap);
+        shoppingListPDFExporter.export(response);
+
+    }
+
     @GetMapping("/id/{id}")
     public ResponseEntity<Map<BasicIngredient, Double>> getElementsFromShoppingList(@PathVariable("id") Long shoppingListId){
         Map<BasicIngredient, Double> shoppingListElements = shoppingListService.getShoppingListMap(shoppingListId);
@@ -65,14 +84,6 @@ public class ShoppingListController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyMap());
         }
     }
-//    @GetMapping("/merged/{id}")
-//    public ResponseEntity<List<RecipeIngredient>> getMergedShoppingList(@PathVariable("id") Long shoppingListId){
-//        List<ShoppingList> shoppingLists = shoppingListService.getAllShoppingLists();
-//
-//        List<RecipeIngredient> mergedIngredients = shoppingListService.getMergedShoppingList(shoppingListId);
-//
-//        return ResponseEntity.ok(mergedIngredients);
-//    }
 
     @GetMapping("/all")
     public ResponseEntity<List<ShoppingList>> getAllShoppingLists(){

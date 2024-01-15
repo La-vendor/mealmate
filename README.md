@@ -80,7 +80,7 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
 
     - Once meals are planned, you can generate shopping list, that includes aggregated ingredients from all selected
       recipes.
-    - Download shopping list in PDF. - _TO DO_
+    - Download shopping list in PDF. - _DONE_
 
 <img src='shopping-list.png' width='350'>
 

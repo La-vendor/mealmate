@@ -36,8 +36,8 @@
             </table>
         </div>
         <div class="col-3">
-            <form th:action="@{/shopping-list/pdf}" method="GET" style="margin-top=20px;">
-                <button type="submit" class="btn btn-primary generateShoppingListBtn" disabled>Save to PDF
+            <form th:action="@{/shopping-list/export-pdf}" method="GET" th:if="${not #maps.isEmpty(ingredientQuantityMap)}">
+                <button type="submit" class="btn btn-primary generateShoppingListBtn">Save to PDF
                 </button>
             </form>
         </div>

@@ -32,16 +32,8 @@ public class ShoppingListService {
         return shoppingListRepository.save(shoppingList);
     }
 
-    private Map<BasicIngredient, Double> mergeIngredients(Map<BasicIngredient, Double> existingIngredients,
-                                                          List<RecipeIngredient> newRecipeIngredients) {
-        for (RecipeIngredient recipeIngredient : newRecipeIngredients) {
-            BasicIngredient basicIngredient = recipeIngredient.getBasicIngredient();
-            double quantity = recipeIngredient.getQuantity();
 
-            existingIngredients.merge(basicIngredient, quantity, Double::sum);
-        }
-        return existingIngredients;
-    }
+
 
     public ShoppingList addIngredientsToShoppingList(Long shoppingListId, Map<BasicIngredient, Double> recipeIngredients) {
         ShoppingList shoppingList = shoppingListRepository.findById(shoppingListId).orElseThrow(() -> new EntityNotFoundException("Shopping List not found"));
@@ -64,10 +56,10 @@ public class ShoppingListService {
         return shoppingListRepository.findAll();
     }
 
-    public void deleteShoppingList(Long shoppingListId) {
-        ShoppingList shoppingList = shoppingListRepository.findById(shoppingListId).orElseThrow(() -> new EntityNotFoundException("Shopping List not found"));
-        shoppingListRepository.delete(shoppingList);
+    public ShoppingList getShoppingListById(Long shoppingListId){
+        return shoppingListRepository.findById(shoppingListId).orElseThrow(() -> new EntityNotFoundException("Shopping List not found"));
     }
+
 
     private List<RecipeIngredient> extractRecipeIngredientsFromDailyMenus(List<DailyMenu> dailyMenus) {
         List<RecipeIngredient> extractedIngredients = new ArrayList<>();
@@ -83,6 +75,17 @@ public class ShoppingListService {
             }
         }
         return extractedIngredients;
+    }
+
+    private Map<BasicIngredient, Double> mergeIngredients(Map<BasicIngredient, Double> existingIngredients,
+                                                          List<RecipeIngredient> newRecipeIngredients) {
+        for (RecipeIngredient recipeIngredient : newRecipeIngredients) {
+            BasicIngredient basicIngredient = recipeIngredient.getBasicIngredient();
+            double quantity = recipeIngredient.getQuantity();
+
+            existingIngredients.merge(basicIngredient, quantity, Double::sum);
+        }
+        return existingIngredients;
     }
 
 }

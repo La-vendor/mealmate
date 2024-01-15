@@ -54,7 +54,7 @@ INSERT INTO recipe_ingredients (recipe_id, basic_ingredient_id, quantity) VALUES
 
 INSERT INTO recipe_ingredients (recipe_id, basic_ingredient_id, quantity) VALUES
     (2, 25, 500),
-    (2, 17, 500),
+    (2, 17, 200),
     (2, 3, 200),
     (2, 13, 1);
 
