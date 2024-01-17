@@ -1,5 +1,6 @@
 package com.lavendor.mealmate.ingredients;
 
+import com.lavendor.mealmate.MealmateApplication;
 import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.repository.BasicIngredientRepository;
 import com.lavendor.mealmate.service.BasicIngredientService;
@@ -15,7 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@SpringBootTest(classes = MealmateApplication.class)
 public class BasicIngredientServiceTest {
 
     String testIngredientName = "Minced Meat";

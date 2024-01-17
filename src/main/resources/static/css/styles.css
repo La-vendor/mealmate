@@ -1,7 +1,7 @@
         body{
             background-color: #B2DFFC;
         }
-        .sidebar {
+        .sidebar{
             position: fixed;
             top: 0;
             left: 0;
@@ -13,7 +13,9 @@
             border-right: 2px solid #81adc9;
             padding-right: 10px;
         }
-        .sidebar a {
+        .sidebar a,
+        .sidebar-button,
+        .sidebar form{
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
             display: block;
@@ -21,12 +23,31 @@
             color: #333333;
             text-decoration: none;
         }
-        .sidebar a:hover {
+        .sidebar form{
+            margin-top: 80px;
+        }
+        .sidebar-button {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            padding: 0px;
+            width: 100px;
+            text-align: left;
+
+        }
+        .sidebar a:hover{
+            background-color: #a8d5f2;
+        }
+         .sidebar-button:hover{
             background-color: #a8d5f2;
         }
         .sidebar a.active {
             font-weight: bold;
             background-color: #81adc9;
+        }
+
+        .sidebar form:hover {
+            background-color: #a8d5f2;
         }
         .card {
             min-height: 180px;

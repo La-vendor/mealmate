@@ -8,11 +8,13 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
+    @Column(unique = true,nullable = false)
     private String username;
-    private String salt;
     private String password;
 
 
@@ -27,8 +29,9 @@ public class User {
     public User() {
     }
 
-    public User(String username) {
+    public User(String username, String password) {
         this.username = username;
+        this.password = password;
     }
 
     public Long getUserId() {
@@ -45,14 +48,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     public String getPassword() {
