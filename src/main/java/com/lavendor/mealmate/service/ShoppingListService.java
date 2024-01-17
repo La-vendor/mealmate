@@ -17,23 +17,20 @@ public class ShoppingListService {
         this.shoppingListRepository = shoppingListRepository;
     }
 
-    public ShoppingList generateOrUpdateShoppingList(String name, List<DailyMenu> dailyMenus) {
+    public ShoppingList generateOrUpdateShoppingList(Long userId, List<DailyMenu> dailyMenus) {
         List<RecipeIngredient> recipeIngredients = extractRecipeIngredientsFromDailyMenus(dailyMenus);
 
         if (recipeIngredients.isEmpty()) {
             throw new RuntimeException("No RecipeIngredients found from DailyMenus");
         }
-        Optional<ShoppingList> optionalShoppingList = shoppingListRepository.findByName(name);
-        ShoppingList shoppingList;
+        Optional<ShoppingList> optionalShoppingList = shoppingListRepository.findByUserId(userId);
 
-        shoppingList = optionalShoppingList.orElseGet(() -> new ShoppingList(name, new HashMap<>()));
+        ShoppingList shoppingList = optionalShoppingList.orElseGet(() -> new ShoppingList(userId, new HashMap<>()));
 
         shoppingList.setIngredientQuantityMap(mergeIngredients(new HashMap<>(), recipeIngredients));
+        shoppingList.setUserId(userId);
         return shoppingListRepository.save(shoppingList);
     }
-
-
-
 
     public ShoppingList addIngredientsToShoppingList(Long shoppingListId, Map<BasicIngredient, Double> recipeIngredients) {
         ShoppingList shoppingList = shoppingListRepository.findById(shoppingListId).orElseThrow(() -> new EntityNotFoundException("Shopping List not found"));
@@ -52,11 +49,21 @@ public class ShoppingListService {
         }
     }
 
+    public Map<BasicIngredient, Double> getShoppingListByUserId(Long userId) {
+        Optional<ShoppingList> optionalShoppingList = shoppingListRepository.findByUserId(userId);
+        if (optionalShoppingList.isPresent()) {
+            ShoppingList shoppingList = optionalShoppingList.get();
+            return shoppingList.getIngredientQuantityMap();
+        } else {
+            return Collections.emptyMap();
+        }
+    }
+
     public List<ShoppingList> getAllShoppingLists() {
         return shoppingListRepository.findAll();
     }
 
-    public ShoppingList getShoppingListById(Long shoppingListId){
+    public ShoppingList getShoppingListById(Long shoppingListId) {
         return shoppingListRepository.findById(shoppingListId).orElseThrow(() -> new EntityNotFoundException("Shopping List not found"));
     }
 

@@ -11,7 +11,6 @@ public class ShoppingList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shoppingListId;
-    private String name;
     private Long userId;
 
     @ElementCollection
@@ -26,9 +25,9 @@ public class ShoppingList {
     public ShoppingList() {
     }
 
-    public ShoppingList(String name, Map<BasicIngredient, Double> ingredientQuantityMap){
-        this.name = name;
+    public ShoppingList(Long userId, Map<BasicIngredient, Double> ingredientQuantityMap){
         this.ingredientQuantityMap = ingredientQuantityMap;
+        this.userId = userId;
     }
 
     public void addShoppingListElement(Map<BasicIngredient, Double> additionalShoppingListElements) {
@@ -41,14 +40,6 @@ public class ShoppingList {
 
     public void setShoppingListId(Long shoppingListId) {
         this.shoppingListId = shoppingListId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Long getUserId() {

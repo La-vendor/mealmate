@@ -5,10 +5,12 @@ import com.lavendor.mealmate.model.DailyMenu;
 import com.lavendor.mealmate.model.Recipe;
 import com.lavendor.mealmate.service.DailyMenuService;
 import com.lavendor.mealmate.service.RecipeService;
+import com.lavendor.mealmate.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,15 +26,18 @@ public class DailyMenuController {
 
     private final DailyMenuService dailyMenuService;
     private final RecipeService recipeService;
+    private final UserService userService;
 
-    public DailyMenuController(DailyMenuService dailyMenuService, RecipeService recipeService) {
+    public DailyMenuController(DailyMenuService dailyMenuService, RecipeService recipeService, UserService userService) {
         this.dailyMenuService = dailyMenuService;
         this.recipeService = recipeService;
+        this.userService = userService;
     }
 
     @GetMapping()
-    public String getDailyMenuPage(Model model) {
-        List<DailyMenu> dailyMenus = dailyMenuService.getAllDailyMenu();
+    public String getDailyMenuPage(Authentication authentication, Model model) {
+        Long activeUserId = userService.getActiveUserId(authentication);
+        List<DailyMenu> dailyMenus = dailyMenuService.getDailyMenuByUserId(activeUserId);
         List<Recipe> recipeList = recipeService.getAllRecipes();
         model.addAttribute("recipeList", recipeList);
         model.addAttribute("dailyMenus", dailyMenus);
@@ -41,9 +46,9 @@ public class DailyMenuController {
     }
 
     @PostMapping("/add")
-    public String addDailyMenu() {
-
-        DailyMenu dailyMenu = dailyMenuService.createDailyMenu();
+    public String addDailyMenu(Authentication authentication) {
+        Long activeUserId = userService.getActiveUserId(authentication);
+        DailyMenu dailyMenu = dailyMenuService.createDailyMenu(activeUserId);
 
         return "redirect:/daily-menu";
     }
@@ -85,7 +90,7 @@ public class DailyMenuController {
 
     }
 
-    @GetMapping("/all")
+    @GetMapping("/api/all")
     public ResponseEntity<List<DailyMenu>> getAllDailyMenus() {
         List<DailyMenu> dailyMenus = dailyMenuService.getAllDailyMenu();
 
@@ -96,7 +101,7 @@ public class DailyMenuController {
         }
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/api/id/{id}")
     public ResponseEntity<DailyMenu> getDailyMenuById(@PathVariable("id") String stringId) {
 
         Long dailyMenuId = Long.valueOf(stringId);
@@ -104,12 +109,13 @@ public class DailyMenuController {
         return ResponseEntity.ok(dailyMenu);
     }
 
-    @DeleteMapping("/id/{id}")
+    @DeleteMapping("/api/id/{id}")
     public ResponseEntity<String> deleteDailyMenu(@PathVariable("id") String stringId) {
         Long dailyMenuId = Long.valueOf(stringId);
         dailyMenuService.deleteDailyMenu(dailyMenuId);
         return ResponseEntity.ok("Daily Menu with ID: " + dailyMenuId + " deleted successfully");
     }
+
 
 //    @PostMapping("/add")
 //    public ResponseEntity<String> addDailyMenu() {

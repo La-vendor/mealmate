@@ -1,6 +1,3 @@
--- Users
-INSERT INTO users (username) VALUES ('john_dell');
-
 --Ingredients
 INSERT INTO basic_ingredients (basic_ingredient_name, unit) VALUES ('Pasta', 'grams');              --1
 INSERT INTO basic_ingredients (basic_ingredient_name, unit) VALUES ('Cheese', 'grams');

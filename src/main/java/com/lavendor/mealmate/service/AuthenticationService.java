@@ -14,9 +14,6 @@ import java.util.ArrayList;
 @Service
 public class AuthenticationService  implements AuthenticationProvider {
 
-//    @Autowired
-//    private UserRepository userRepository;
-
     @Autowired
     private  PasswordEncoderService passwordEncoderService;
 
@@ -37,14 +34,6 @@ public class AuthenticationService  implements AuthenticationProvider {
         }catch(UsernameNotFoundException e){
             e.printStackTrace();
         }
-
-//        Optional<User> optionalUser = userRepository.findByUsername(username);
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//            if (passwordEncoderService.matchPassword(password, user.getPassword())) {
-//                return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
-//            }
-//        }
         return null;
     }
 

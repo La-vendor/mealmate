@@ -5,6 +5,7 @@ import com.lavendor.mealmate.model.UserDTO;
 import com.lavendor.mealmate.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,6 +59,14 @@ public class UserService {
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
         userRepository.delete(user);
+    }
+
+    public Long getActiveUserId(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            Optional<User> optionalUser = userRepository.findByUsername(authentication.getName());
+            if (optionalUser.isPresent()) return optionalUser.get().getUserId();
+        }
+        return null;
     }
 
 }

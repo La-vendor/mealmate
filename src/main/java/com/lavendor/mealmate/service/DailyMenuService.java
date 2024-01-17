@@ -22,9 +22,14 @@ public class DailyMenuService {
         this.recipeRepository = recipeRepository;
     }
 
-    public DailyMenu createDailyMenu() {
-        DailyMenu dailyMenu = new DailyMenu(getNewDate());
-        return dailyMenuRepository.save(dailyMenu);
+    public DailyMenu createDailyMenu(Long activeUserId) {
+
+        if(activeUserId != null) {
+            DailyMenu dailyMenu = new DailyMenu(getNewDate(), activeUserId);
+            return dailyMenuRepository.save(dailyMenu);
+        }else{
+            return null;
+        }
     }
 
     public LocalDate getNewDate(){
@@ -40,8 +45,6 @@ public class DailyMenuService {
         }else{
             return LocalDate.now();
         }
-
-
     }
 
     public boolean addRecipeToDailyMenu(Long dailyMenuId, Long recipeId) {
@@ -73,6 +76,9 @@ public class DailyMenuService {
         return dailyMenuRepository.findById(dailyMenuId).orElseThrow(() -> new EntityNotFoundException("DailyMenu not found"));
     }
 
+    public List<DailyMenu> getDailyMenuByUserId(Long userId) {
+        return dailyMenuRepository.findByUserId(userId);
+    }
     public DailyMenu getDailyMenuByDate(LocalDate date) {
         return dailyMenuRepository.findByDate(date).orElseThrow(() -> new EntityNotFoundException("DailyMenu not found"));
     }
