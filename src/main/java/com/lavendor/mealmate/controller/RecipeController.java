@@ -3,10 +3,14 @@ package com.lavendor.mealmate.controller;
 import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.model.Recipe;
 import com.lavendor.mealmate.model.RecipeIngredient;
+import com.lavendor.mealmate.repository.RecipeIngredientRepository;
 import com.lavendor.mealmate.service.BasicIngredientService;
+import com.lavendor.mealmate.service.RecipeIngredientService;
 import com.lavendor.mealmate.service.RecipeService;
+import com.lavendor.mealmate.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,9 @@ public class RecipeController {
 
     private final RecipeService recipeService;
     private final BasicIngredientService basicIngredientService;
+    private final UserService userService;
+    private final RecipeIngredientRepository recipeIngredientRepository;
+    private final RecipeIngredientService recipeIngredientService;
 
     @ModelAttribute("temporaryIngredients")
     public List<RecipeIngredient> temporaryIngredients() {
@@ -35,18 +42,23 @@ public class RecipeController {
         return new ArrayList<>();
     }
 
-    public RecipeController(RecipeService recipeService, BasicIngredientService basicIngredientService) {
+    public RecipeController(RecipeService recipeService, BasicIngredientService basicIngredientService, UserService userService,
+                            RecipeIngredientRepository recipeIngredientRepository, RecipeIngredientService recipeIngredientService) {
         this.recipeService = recipeService;
         this.basicIngredientService = basicIngredientService;
+        this.userService = userService;
+        this.recipeIngredientRepository = recipeIngredientRepository;
+        this.recipeIngredientService = recipeIngredientService;
     }
-
 
     @GetMapping()
     public String getRecipePage(@ModelAttribute("temporaryIngredients") List<RecipeIngredient> temporaryIngredients,
                                 @ModelAttribute("recipeIngredients") List<RecipeIngredient> recipeIngredients,
+                                Authentication authentication,
                                 Model model) {
-        List<Recipe> recipeList = recipeService.getAllRecipes();
-        List<BasicIngredient> basicIngredientList = basicIngredientService.getAllBasicIngredients();
+        Long activeUserId = userService.getActiveUserId(authentication);
+        List<Recipe> recipeList = recipeService.getRecipesByUserId(activeUserId);
+        List<BasicIngredient> basicIngredientList = basicIngredientService.getBasicIngredientsByUserId(activeUserId);
         basicIngredientList.sort(Comparator.comparing(BasicIngredient::getBasicIngredientName, String.CASE_INSENSITIVE_ORDER));
 
         model.addAttribute("recipeIngredients", recipeIngredients);
@@ -69,23 +81,26 @@ public class RecipeController {
     }
 
     @GetMapping("/reset")
-    public String deleteIngredient(@SessionAttribute("temporaryIngredients") List<RecipeIngredient> temporaryIngredients){
+    public String deleteIngredient(@SessionAttribute("temporaryIngredients") List<RecipeIngredient> temporaryIngredients) {
         temporaryIngredients.clear();
         return "redirect:/recipe";
     }
 
     @PostMapping("/add")
     public String addRecipe(@RequestParam("newRecipeName") String newRecipeName,
-                            @SessionAttribute("temporaryIngredients") List<RecipeIngredient> temporaryIngredients) {
+                            @SessionAttribute("temporaryIngredients") List<RecipeIngredient> temporaryIngredients,
+                            Authentication authentication) {
 
-        Recipe recipe = recipeService.createRecipe(newRecipeName, temporaryIngredients);
+        Long activeUserId = userService.getActiveUserId(authentication);
+        Recipe newRecipe = recipeService.createRecipe(newRecipeName, temporaryIngredients, activeUserId);
+        recipeIngredientService.addRecipeToIngredients(temporaryIngredients, newRecipe);
         temporaryIngredients.clear();
         return "redirect:/recipe";
     }
 
     @GetMapping("/ingredients/{recipeId}")
     public String displayRecipeIngredient(@PathVariable("recipeId") Long recipeId,
-                                          @SessionAttribute("recipeIngredients") List<RecipeIngredient> recipeIngredients){
+                                          @SessionAttribute("recipeIngredients") List<RecipeIngredient> recipeIngredients) {
         recipeIngredients.clear();
         recipeIngredients.addAll(recipeService.getRecipeById(recipeId).getIngredients());
         return "redirect:/recipe";

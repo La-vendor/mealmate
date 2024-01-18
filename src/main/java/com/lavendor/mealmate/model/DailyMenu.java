@@ -27,6 +27,9 @@ public class DailyMenu {
     public DailyMenu() {
     }
 
+
+
+
     public DailyMenu(LocalDate date, Long userId) {
         this.date = date;
         this.userId = userId;

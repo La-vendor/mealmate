@@ -1,13 +1,16 @@
 package com.lavendor.mealmate.service;
 
-import com.lavendor.mealmate.model.User;
-import com.lavendor.mealmate.model.UserDTO;
+import com.lavendor.mealmate.model.*;
+import com.lavendor.mealmate.repository.BasicIngredientRepository;
+import com.lavendor.mealmate.repository.RecipeIngredientRepository;
+import com.lavendor.mealmate.repository.RecipeRepository;
 import com.lavendor.mealmate.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,10 +19,23 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoderService passwordEncoderService;
+    private final RecipeService recipeService;
+    private final BasicIngredientService basicIngredientService;
+    private final RecipeRepository recipeRepository;
+    private final BasicIngredientRepository basicIngredientRepository;
+    private final RecipeIngredientRepository recipeIngredientRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoderService passwordEncoderService) {
+    public UserService(UserRepository userRepository, PasswordEncoderService passwordEncoderService, RecipeService recipeService, BasicIngredientService basicIngredientService,
+                       RecipeRepository recipeRepository,
+                       BasicIngredientRepository basicIngredientRepository,
+                       RecipeIngredientRepository recipeIngredientRepository) {
         this.userRepository = userRepository;
         this.passwordEncoderService = passwordEncoderService;
+        this.recipeService = recipeService;
+        this.basicIngredientService = basicIngredientService;
+        this.recipeRepository = recipeRepository;
+        this.basicIngredientRepository = basicIngredientRepository;
+        this.recipeIngredientRepository = recipeIngredientRepository;
     }
 
     public User createUser(UserDTO userDTO) {
@@ -37,6 +53,35 @@ public class UserService {
             return userRepository.save(user);
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("Username is not available", e);
+        }
+    }
+
+    //TODO Refactor, add parts to RecipeService and BasicIngredientsService
+    public void addStarterDataToUser(User user) {
+        List<Recipe> starterRecipes = recipeService.getStarterRecipes();
+        List<BasicIngredient> starterIngredients = basicIngredientService.getStarterIngredients();
+
+        for (Recipe starterRecipe : starterRecipes) {
+            Recipe copiedRecipe = new Recipe(starterRecipe);
+
+            List<RecipeIngredient> copiedRecipeIngredients = new ArrayList<>();
+
+            for (RecipeIngredient starterIngredient : starterRecipe.getIngredients()) {
+                RecipeIngredient copiedRecipeIngredient = new RecipeIngredient(starterIngredient);
+
+                copiedRecipeIngredient.setRecipe(copiedRecipe);
+                copiedRecipeIngredients.add(copiedRecipeIngredient);
+            }
+            copiedRecipe.setUserId(user.getUserId());
+            copiedRecipe.setIngredients(copiedRecipeIngredients);
+            recipeRepository.save(copiedRecipe);
+            recipeIngredientRepository.saveAll(copiedRecipeIngredients);
+        }
+
+        for (BasicIngredient basicIngredient : starterIngredients) {
+            BasicIngredient copiedIngredient = new BasicIngredient(basicIngredient);
+            copiedIngredient.setUserId(user.getUserId());
+            basicIngredientRepository.save(copiedIngredient);
         }
     }
 

@@ -4,12 +4,14 @@ import com.lavendor.mealmate.MealmateApplication;
 import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.repository.BasicIngredientRepository;
 import com.lavendor.mealmate.service.BasicIngredientService;
+import com.lavendor.mealmate.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.Authentication;
 
 import java.util.Optional;
 
@@ -21,6 +23,7 @@ public class BasicIngredientServiceTest {
 
     String testIngredientName = "Minced Meat";
     String testIngredientUnit = "grams";
+    Long activeUserId;
 
     @MockBean
     private BasicIngredientRepository basicIngredientRepository;
@@ -28,20 +31,27 @@ public class BasicIngredientServiceTest {
     @Autowired
     private BasicIngredientService basicIngredientService;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    Authentication authentication;
+
     @BeforeEach
     public void init(){
         testIngredientName = "Minced Meat";
         testIngredientUnit = "grams";
+        activeUserId = userService.getActiveUserId(authentication);
     }
 
     @Test
     public void testAddBasicIngredient() {
 
-        BasicIngredient expectedIngredient = new BasicIngredient(testIngredientName, testIngredientUnit);
+        BasicIngredient expectedIngredient = new BasicIngredient(testIngredientName, testIngredientUnit, activeUserId);
 
         when(basicIngredientRepository.save(any(BasicIngredient.class))).thenReturn(expectedIngredient);
 
-        BasicIngredient result = basicIngredientService.addBasicIngredient(testIngredientName, testIngredientUnit);
+        BasicIngredient result = basicIngredientService.addBasicIngredient(testIngredientName, testIngredientUnit,activeUserId);
 
         assertEquals(expectedIngredient, result);
         verify(basicIngredientRepository).save(any(BasicIngredient.class));
@@ -50,7 +60,7 @@ public class BasicIngredientServiceTest {
     @Test
     public void testGetBasicIngredientById(){
         Long ingredientId = 1L;
-        BasicIngredient expectedIngredient = new BasicIngredient(testIngredientName, testIngredientUnit);
+        BasicIngredient expectedIngredient = new BasicIngredient(testIngredientName, testIngredientUnit,activeUserId);
 
         when(basicIngredientRepository.findById(ingredientId)).thenReturn(Optional.of(expectedIngredient));
 

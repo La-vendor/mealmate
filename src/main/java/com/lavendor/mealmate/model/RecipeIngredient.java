@@ -35,6 +35,11 @@ public class RecipeIngredient {
         this.quantity = quantity;
     }
 
+    public RecipeIngredient(RecipeIngredient recipeIngredient) {
+        this.basicIngredient = recipeIngredient.getBasicIngredient();
+        this.quantity = recipeIngredient.getQuantity();
+    }
+
     public Long getRecipeIngredientId() {
         return recipeIngredientId;
     }

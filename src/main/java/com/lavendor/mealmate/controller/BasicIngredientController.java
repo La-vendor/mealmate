@@ -2,8 +2,10 @@ package com.lavendor.mealmate.controller;
 
 import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.service.BasicIngredientService;
+import com.lavendor.mealmate.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +19,21 @@ import java.util.List;
 public class BasicIngredientController {
 
     private final BasicIngredientService basicIngredientService;
+    private final UserService userService;
 
-    public BasicIngredientController(BasicIngredientService basicIngredientService) {
+    public BasicIngredientController(BasicIngredientService basicIngredientService, UserService userService) {
         this.basicIngredientService = basicIngredientService;
+        this.userService = userService;
     }
 
     //Thymeleaf
     @GetMapping()
-    public String getBasicIngredientsPage(Model model) {
-        List<BasicIngredient> basicIngredientList = basicIngredientService.getAllBasicIngredients();
+    public String getBasicIngredientsPage(Authentication authentication, Model model) {
+        Long activeUserId = userService.getActiveUserId(authentication);
+
+        List<BasicIngredient> basicIngredientList = basicIngredientService.getBasicIngredientsByUserId(activeUserId);
         basicIngredientList.sort(Comparator.comparing(BasicIngredient::getBasicIngredientName, String.CASE_INSENSITIVE_ORDER));
+
 
         model.addAttribute("basicIngredientsList", basicIngredientList);
         model.addAttribute("currentPage", "ingredients");
@@ -34,11 +41,12 @@ public class BasicIngredientController {
     }
 
     @PostMapping("/new-ingredient")
-    public String addNewIngredient(@ModelAttribute BasicIngredient basicIngredient) {
-
-            if (!basicIngredientService.checkIfIngredientExists(basicIngredient.getBasicIngredientName())) {
-                basicIngredientService.addBasicIngredient(basicIngredient.getBasicIngredientName(), basicIngredient.getUnit());
-            }
+    public String addNewIngredient(@ModelAttribute BasicIngredient basicIngredient,
+                                   Authentication authentication) {
+        Long activeUserId = userService.getActiveUserId(authentication);
+        if (!basicIngredientService.checkIfIngredientExists(basicIngredient.getBasicIngredientName())) {
+            basicIngredientService.addBasicIngredient(basicIngredient.getBasicIngredientName(), basicIngredient.getUnit(), activeUserId);
+        }
 
         return "redirect:/ingredients";
     }

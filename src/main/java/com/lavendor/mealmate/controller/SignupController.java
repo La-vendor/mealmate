@@ -39,12 +39,13 @@ public class SignupController {
             errorMessage = getErrorMessage(bindingResult);
         } else {
             try {
-                User saveUser = userService.createUser(userDTO);
-                if (saveUser != null) {
+                User savedUser = userService.createUser(userDTO);
+                if (savedUser != null) {
+                    userService.addStarterDataToUser(savedUser);
                     attributes.addFlashAttribute("signupSuccess", true);
                     return new RedirectView("/login", true);
                 }
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
 

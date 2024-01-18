@@ -36,4 +36,10 @@ public class RecipeIngredientService {
         recipeIngredientRepository.delete(recipeIngredient);
     }
 
+    public void addRecipeToIngredients(List<RecipeIngredient> recipeIngredients, Recipe recipe) {
+        for(RecipeIngredient recipeIngredient : recipeIngredients){
+            recipeIngredient.setRecipe(recipe);
+            recipeIngredientRepository.saveAll(recipeIngredients);
+        }
+    }
 }

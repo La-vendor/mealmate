@@ -13,15 +13,34 @@ public class Recipe {
     private Long recipeId;
     private String recipeName;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+
+    @JoinColumn(name = "user_id")
+    private Long userId;
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<RecipeIngredient> recipeIngredients;
+
 
     public Recipe() {
     }
 
-    public Recipe(String recipeName, List<RecipeIngredient> recipeIngredients) {
+    public Recipe(Recipe recipe) {
+        this.recipeName = recipe.getRecipeName();
+        this.recipeIngredients = recipe.getIngredients();
+    }
+
+    public Recipe(String recipeName, List<RecipeIngredient> recipeIngredients, Long userId) {
         this.recipeName = recipeName;
         this.recipeIngredients = recipeIngredients;
+        this.userId = userId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getRecipeId() {
@@ -46,5 +65,9 @@ public class Recipe {
 
     public void setIngredients(List<RecipeIngredient> recipeIngredients) {
         this.recipeIngredients = recipeIngredients;
+    }
+
+    public void addIngredient(RecipeIngredient recipeIngredient) {
+        this.recipeIngredients.add(recipeIngredient);
     }
 }

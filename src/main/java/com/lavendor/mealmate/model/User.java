@@ -13,7 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
     private String password;
 
@@ -22,12 +22,28 @@ public class User {
     @JoinTable(
             name = "user_dailymenus",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "daily_menu_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "daily_menu_id"))
+
     private List<DailyMenu> dailyMenus;
+
+//    @OneToMany
+//    @JoinTable(
+//            name = "user_recipes",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "recipe_id"))
+//    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+//    private List<Recipe> recipes;
+//
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_ingredients",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "basic_ingredient_id"))
+//    private List<BasicIngredient> ingredients;
 
     public User() {
     }
+
 
     public User(String username, String password) {
         this.username = username;
@@ -65,4 +81,20 @@ public class User {
     public void setDailyMenus(List<DailyMenu> dailyMenus) {
         this.dailyMenus = dailyMenus;
     }
+
+//    public List<Recipe> getRecipes() {
+//        return recipes;
+//    }
+//
+//    public void setRecipes(List<Recipe> recipes) {
+//        this.recipes = recipes;
+//    }
+//
+//    public List<BasicIngredient> getIngredients() {
+//        return ingredients;
+//    }
+//
+//    public void setIngredients(List<BasicIngredient> ingredients) {
+//        this.ingredients = ingredients;
+//    }
 }
