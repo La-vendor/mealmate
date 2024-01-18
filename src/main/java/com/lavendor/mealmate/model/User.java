@@ -2,8 +2,6 @@ package com.lavendor.mealmate.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -18,13 +16,13 @@ public class User {
     private String password;
 
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_dailymenus",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "daily_menu_id"))
-
-    private List<DailyMenu> dailyMenus;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_dailymenus",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "daily_menu_id"))
+//
+//    private List<DailyMenu> dailyMenus;
 
 //    @OneToMany
 //    @JoinTable(
@@ -74,13 +72,13 @@ public class User {
         this.password = password;
     }
 
-    public List<DailyMenu> getDailyMenus() {
-        return dailyMenus;
-    }
-
-    public void setDailyMenus(List<DailyMenu> dailyMenus) {
-        this.dailyMenus = dailyMenus;
-    }
+//    public List<DailyMenu> getDailyMenus() {
+//        return dailyMenus;
+//    }
+//
+//    public void setDailyMenus(List<DailyMenu> dailyMenus) {
+//        this.dailyMenus = dailyMenus;
+//    }
 
 //    public List<Recipe> getRecipes() {
 //        return recipes;

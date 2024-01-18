@@ -51,30 +51,30 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
 
 1. **Register/Login:**
 
-    - Create a new account or log in if you already have one. - _TO DO_
+    - Create a new account or log in if you already have one.
 
 2. **Ingredients Management:**
 
     - Navigate to the "Ingredients" tab to manage your ingredients.
-    - Add new Ingredients. - _DONE_
+    - Add new Ingredients.
     - Add new Ingredients from external API. - _TO DO_
 
 3. **Recipe Management:**
 
     - Navigate to the "Recipes" tab to manage your recipes.
-    - Add new recipes with ingredients. - _DONE_
-    - Display ingredients of selected recipe. - _DONE_
+    - Add new recipes with ingredients.
+    - Display ingredients of selected recipe.
 
 4. **Meal Planning:**
 
     - Go to the "Meal Planner" section to plan your meals for the upcoming week or month.
-    - Download Meal Plan in PDF. - _DONE_
+    - Download Meal Plan in PDF.
 
 5. **Generate Shopping List:**
 
     - Once meals are planned, you can generate shopping list, that includes aggregated ingredients from all selected
       recipes.
-    - Download shopping list in PDF. - _DONE_
+    - Download shopping list in PDF.
 
 # Screenshots
 
