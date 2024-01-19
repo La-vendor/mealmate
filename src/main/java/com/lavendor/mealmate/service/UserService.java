@@ -43,17 +43,19 @@ public class UserService {
             throw new RuntimeException("Invalid user object");
         }
 
-        if (!userDTO.password().equals(userDTO.confirmPassword())) {
-            throw new RuntimeException("Password and confirm password do not match");
-        }
         String encodedPassword = passwordEncoderService.encodePassword(userDTO.password());
         User user = new User(userDTO.username(), encodedPassword);
 
         try {
             return userRepository.save(user);
         } catch (DataIntegrityViolationException e) {
+            //TODO Add custom exception - UserAlreadyExistsException
             throw new RuntimeException("Username is not available", e);
         }
+    }
+
+    public boolean checkIfPasswordIsEqual(UserDTO userDTO) {
+        return (userDTO.password().equals(userDTO.confirmPassword()));
     }
 
     //TODO Refactor, add parts to RecipeService and BasicIngredientsService
@@ -89,16 +91,8 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public boolean isUsernameAvailable(String username) {
-        return !userRepository.findByUsername(username).isPresent();
-    }
-
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
-    }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
     }
 
     public void deleteUser(Long userId) {

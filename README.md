@@ -57,7 +57,6 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
 
     - Navigate to the "Ingredients" tab to manage your ingredients.
     - Add new Ingredients.
-    - Add new Ingredients from external API. - _TO DO_
 
 3. **Recipe Management:**
 
@@ -96,5 +95,6 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
 
 ## Options for future
 
+* Add option to add Ingredients from external API with macronutrient
 * migrate from H2 to PostgeSQL
 * deploy application in cloud service like Railway or Heroku

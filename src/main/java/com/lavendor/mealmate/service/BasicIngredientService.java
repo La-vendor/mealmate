@@ -27,10 +27,6 @@ public class BasicIngredientService {
         return basicIngredientRepository.findById(basicIngredientId).orElseThrow(() -> new EntityNotFoundException("Ingredient not found"));
     }
 
-    public BasicIngredient getBasicIngredientByName(String basicIngredientName){
-        return basicIngredientRepository.findByBasicIngredientNameIgnoreCase(basicIngredientName).orElseThrow(() -> new EntityNotFoundException("Ingredient not found"));
-    }
-
     public boolean checkIfIngredientExists(String basicIngredientName){
         return basicIngredientRepository.existsByBasicIngredientName(basicIngredientName);
     }
@@ -44,6 +40,10 @@ public class BasicIngredientService {
         basicIngredientRepository.delete(basicIngredient);
     }
 
+    public List<BasicIngredient> getBasicIngredientsByUserId(Long userId) {
+        return basicIngredientRepository.findByUserId(userId);
+    }
+
     public List<BasicIngredient> getStarterIngredients() {
 
         List<BasicIngredient> basicIngredientsToAdd = new ArrayList<>();
@@ -53,9 +53,5 @@ public class BasicIngredientService {
             optionalBasicIngredient.ifPresent(basicIngredientsToAdd::add);
         }
         return basicIngredientsToAdd;
-    }
-
-    public List<BasicIngredient> getBasicIngredientsByUserId(Long userId) {
-        return basicIngredientRepository.findByUserId(userId);
     }
 }

@@ -39,7 +39,7 @@ public class RecipeIngredientService {
     public void addRecipeToIngredients(List<RecipeIngredient> recipeIngredients, Recipe recipe) {
         for(RecipeIngredient recipeIngredient : recipeIngredients){
             recipeIngredient.setRecipe(recipe);
-            recipeIngredientRepository.saveAll(recipeIngredients);
         }
+        recipeIngredientRepository.saveAll(recipeIngredients);
     }
 }

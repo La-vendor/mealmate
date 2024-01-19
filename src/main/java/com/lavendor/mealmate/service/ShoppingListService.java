@@ -39,16 +39,6 @@ public class ShoppingListService {
         return shoppingListRepository.save(shoppingList);
     }
 
-    public Map<BasicIngredient, Double> getShoppingListMap(Long shoppingListId) {
-        Optional<ShoppingList> optionalShoppingList = shoppingListRepository.findById(shoppingListId);
-        if (optionalShoppingList.isPresent()) {
-            ShoppingList shoppingList = optionalShoppingList.get();
-            return shoppingList.getIngredientQuantityMap();
-        } else {
-            return Collections.emptyMap();
-        }
-    }
-
     public Map<BasicIngredient, Double> getShoppingListByUserId(Long userId) {
         Optional<ShoppingList> optionalShoppingList = shoppingListRepository.findByUserId(userId);
         if (optionalShoppingList.isPresent()) {
@@ -59,14 +49,9 @@ public class ShoppingListService {
         }
     }
 
-    public List<ShoppingList> getAllShoppingLists() {
-        return shoppingListRepository.findAll();
-    }
-
     public ShoppingList getShoppingListById(Long shoppingListId) {
         return shoppingListRepository.findById(shoppingListId).orElseThrow(() -> new EntityNotFoundException("Shopping List not found"));
     }
-
 
     private List<RecipeIngredient> extractRecipeIngredientsFromDailyMenus(List<DailyMenu> dailyMenus) {
         List<RecipeIngredient> extractedIngredients = new ArrayList<>();
@@ -94,5 +79,4 @@ public class ShoppingListService {
         }
         return existingIngredients;
     }
-
 }

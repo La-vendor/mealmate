@@ -37,6 +37,8 @@ public class SignupController {
 
         if (bindingResult.hasErrors()) {
             errorMessage = getErrorMessage(bindingResult);
+        }else if(!userService.checkIfPasswordIsEqual(userDTO)){
+            errorMessage = "Password and confirm password do not match";
         } else {
             try {
                 User savedUser = userService.createUser(userDTO);
@@ -45,7 +47,8 @@ public class SignupController {
                     attributes.addFlashAttribute("signupSuccess", true);
                     return new RedirectView("/login", true);
                 }
-            } catch (Exception ignored) {
+            } catch (RuntimeException e) {
+                errorMessage = e.getMessage();
             }
         }
 

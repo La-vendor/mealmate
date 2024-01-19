@@ -38,7 +38,7 @@ public class DailyMenuController {
     public String getDailyMenuPage(Authentication authentication, Model model) {
         Long activeUserId = userService.getActiveUserId(authentication);
         List<DailyMenu> dailyMenus = dailyMenuService.getDailyMenuByUserId(activeUserId);
-        List<Recipe> recipeList = recipeService.getAllRecipes();
+        List<Recipe> recipeList = recipeService.getRecipesByUserId(activeUserId);
         model.addAttribute("recipeList", recipeList);
         model.addAttribute("dailyMenus", dailyMenus);
         model.addAttribute("currentPage", "daily-menu");
@@ -75,7 +75,8 @@ public class DailyMenuController {
     }
 
     @GetMapping(value = "/export-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-    public void exportShoppingListToPdf(HttpServletResponse response) throws IOException {
+    public void exportShoppingListToPdf(HttpServletResponse response, Authentication authentication) throws IOException {
+        Long activeUserId = userService.getActiveUserId(authentication);
         response.setContentType("application/pdf");
 
         LocalDate localDate = LocalDate.now();
@@ -84,7 +85,7 @@ public class DailyMenuController {
 
         response.setHeader(headerKey,headerValue);
 
-        List<DailyMenu> dailyMenus = dailyMenuService.getAllDailyMenu();
+        List<DailyMenu> dailyMenus = dailyMenuService.getDailyMenuByUserId(activeUserId);
         DailyMenuPDFExporter dailyMenuPDFExporter = new DailyMenuPDFExporter(dailyMenus);
         dailyMenuPDFExporter.export(response);
 
