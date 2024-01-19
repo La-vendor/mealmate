@@ -22,6 +22,9 @@ recipes.
 - **JavaScript**
 - **OpenPDF** - https://github.com/LibrePDF/OpenPDF
 
+- **Test environment:**  JUnit, Mockito
+
+
 ## Prerequisites
 
 - Java Development Kit (JDK) version 17 or Docker
@@ -75,7 +78,13 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
       recipes.
     - Download shopping list in PDF.
 
-# Screenshots
+## Options for future
+
+* Add option to add Ingredients from external API with macronutrient
+* migrate from H2 to PostgresQL
+* deploy application in cloud service like Railway or Heroku
+
+## Screenshots
 
 1. **Daily Menu**
 
@@ -93,8 +102,4 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
 
 <img src='basic-ingredient.png' width='700'>
 
-## Options for future
 
-* Add option to add Ingredients from external API with macronutrient
-* migrate from H2 to PostgeSQL
-* deploy application in cloud service like Railway or Heroku
