@@ -47,29 +47,28 @@ public class DailyMenuService {
         }
     }
 
-    public boolean addRecipeToDailyMenu(Long dailyMenuId, Long recipeId) {
+    public DailyMenu addRecipeToDailyMenu(Long dailyMenuId, Long recipeId) {
         DailyMenu dailyMenu = dailyMenuRepository.findById(dailyMenuId).orElseThrow(() -> new EntityNotFoundException("DailyMenu not found"));
         Recipe recipeToAdd = recipeRepository.findById(recipeId).orElseThrow(() -> new EntityNotFoundException("Recipe not found"));
 
         if (dailyMenu != null && recipeToAdd != null) {
             if (!dailyMenu.containsRecipe(recipeToAdd)) {
                 dailyMenu.getRecipeList().add(recipeToAdd);
-                dailyMenuRepository.save(dailyMenu);
-                return true;
+                return dailyMenuRepository.save(dailyMenu);
             } else {
-                return false;
+                return null;
                 //Recipe already exists
             }
         }
-        return false;
+        return null;
     }
 
-    public void deleteRecipeFromDailyMenu(Long dailyMenuId, Long recipeId){
+    public DailyMenu deleteRecipeFromDailyMenu(Long dailyMenuId, Long recipeId){
         DailyMenu dailyMenu = dailyMenuRepository.findById(dailyMenuId).orElseThrow(() -> new EntityNotFoundException("DailyMenu not found"));
         List<Recipe> recipeList = dailyMenu.getRecipeList();
         recipeList.removeIf(recipe -> Objects.equals(recipe.getRecipeId(), recipeId));
         dailyMenu.setRecipeList(recipeList);
-        dailyMenuRepository.save(dailyMenu);
+        return dailyMenuRepository.save(dailyMenu);
     }
 
     public DailyMenu getDailyMenuById(Long dailyMenuId) {
@@ -78,13 +77,6 @@ public class DailyMenuService {
 
     public List<DailyMenu> getDailyMenuByUserId(Long userId) {
         return dailyMenuRepository.findByUserId(userId);
-    }
-    public DailyMenu getDailyMenuByDate(LocalDate date) {
-        return dailyMenuRepository.findByDate(date).orElseThrow(() -> new EntityNotFoundException("DailyMenu not found"));
-    }
-
-    public List<DailyMenu> getAllDailyMenu() {
-        return dailyMenuRepository.findAll();
     }
 
     public void deleteDailyMenu(Long dailyMenuId) {

@@ -11,18 +11,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = MealmateApplication.class)
 public class RecipeServiceTest {
 
     List<RecipeIngredient> recipeIngredients;
+    Long recipeId = 100L;
+    Long userId = 100L;
 
     @MockBean
     RecipeRepository recipeRepository;
@@ -43,7 +48,6 @@ public class RecipeServiceTest {
 
     @Test
     public void createRecipe(){
-        Long userId = 1L;
         String recipeName = "Recipe name";
 
         Recipe expectedRecipe = new Recipe(recipeName, recipeIngredients, userId);
@@ -59,8 +63,7 @@ public class RecipeServiceTest {
     @Test
     public void testGetRecipeById() {
 
-        Long recipeId = 1L;
-        Long userId = 1L;
+
         String recipeName = "Recipe name";
 
         Recipe expectedRecipe = new Recipe(recipeName, recipeIngredients, userId);
@@ -74,7 +77,6 @@ public class RecipeServiceTest {
 
     @Test
     public void testGetRecipeById_NonExistingEntity() {
-        Long recipeId = 1L;
 
         when(recipeRepository.findById(recipeId)).thenReturn(Optional.empty());
 
@@ -85,7 +87,6 @@ public class RecipeServiceTest {
 
     @Test
     public void testGetAllRecipes() {
-        Long userId = 1L;
 
         Recipe mockRecipe1 = new Recipe("Recipe name 1", recipeIngredients, userId);
         Recipe mockRecipe2 = new Recipe("Recipe name 2", recipeIngredients, userId);
@@ -102,8 +103,6 @@ public class RecipeServiceTest {
 
     @Test
     public void testDeleteRecipe() {
-        Long recipeId = 1L;
-        Long userId = 1L;
         String recipeName = "Recipe name";
 
         Recipe expectedRecipe = new Recipe(recipeName, recipeIngredients, userId);
@@ -117,7 +116,6 @@ public class RecipeServiceTest {
 
     @Test
     public void testDeleteRecipe_NonExistingEntity() {
-        Long recipeId = 1L;
 
         when(recipeRepository.findById(recipeId)).thenReturn(Optional.empty());
 
@@ -128,7 +126,6 @@ public class RecipeServiceTest {
 
     @Test
     public void testGetUserRecipes(){
-        Long userId = 1L;
 
         Recipe mockRecipe1 = new Recipe("Recipe name 1", recipeIngredients, userId);
         Recipe mockRecipe2 = new Recipe("Recipe name 2", recipeIngredients, userId);

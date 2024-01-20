@@ -1,10 +1,13 @@
 package com.lavendor.mealmate;
 
+import com.lavendor.mealmate.model.User;
+import com.lavendor.mealmate.model.UserDTO;
 import com.lavendor.mealmate.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 public class MealmateApplication {
@@ -14,10 +17,11 @@ public class MealmateApplication {
 	}
 
 	@Bean
+	@Profile("!test")
 	CommandLineRunner commandLineRunner(UserService userService){
 		return ergs -> {
-//			User user = userService.createUser(new UserDTO("qqq","qqq", "qqq"));
-//			if(user != null) userService.addStarterDataToUser(user);
+			User user = userService.createUser(new UserDTO("qqq","qqq", "qqq"));
+			if(user != null) userService.addStarterDataToUser(user);
 
 		};
 	}

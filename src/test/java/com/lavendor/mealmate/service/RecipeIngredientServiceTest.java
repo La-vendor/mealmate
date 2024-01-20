@@ -11,19 +11,24 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = MealmateApplication.class)
 public class RecipeIngredientServiceTest {
 
     BasicIngredient basicIngredient1;
     BasicIngredient basicIngredient2;
+
+    Long ingredientId = 100L;
 
     @MockBean
     RecipeIngredientRepository recipeIngredientRepository;
@@ -53,7 +58,6 @@ public class RecipeIngredientServiceTest {
 
     @Test
     public void testGetRecipeIngredientById() {
-        Long ingredientId = 1L;
         double quantity = 50.0;
         Recipe recipe = new Recipe();
 
@@ -68,7 +72,6 @@ public class RecipeIngredientServiceTest {
 
     @Test
     public void testGetRecipeIngredientById_NonExistingEntity() {
-        Long ingredientId = 1L;
 
         when(recipeIngredientRepository.findById(ingredientId)).thenReturn(Optional.empty());
 
@@ -94,7 +97,6 @@ public class RecipeIngredientServiceTest {
 
     @Test
     public void testDeleteRecipeIngredient() {
-        Long ingredientId = 1L;
         RecipeIngredient mockRecipeIngredient = new RecipeIngredient(basicIngredient1, 100.0);
 
         when(recipeIngredientRepository.findById(ingredientId)).thenReturn(Optional.of(mockRecipeIngredient));
@@ -106,7 +108,6 @@ public class RecipeIngredientServiceTest {
 
     @Test
     public void testDeleteRecipeIngredient_NonExistingEntity() {
-        Long ingredientId = 1L;
 
         when(recipeIngredientRepository.findById(ingredientId)).thenReturn(Optional.empty());
 
@@ -117,7 +118,6 @@ public class RecipeIngredientServiceTest {
 
     @Test
     public void testAddRecipeToIngredients() {
-
         Recipe recipe = new Recipe();
 
         RecipeIngredient mockRecipeIngredient1 = new RecipeIngredient(basicIngredient1, 100.0);

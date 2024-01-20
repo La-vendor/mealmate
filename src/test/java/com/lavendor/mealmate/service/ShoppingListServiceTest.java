@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = MealmateApplication.class)
 public class ShoppingListServiceTest {
 
@@ -39,8 +41,8 @@ public class ShoppingListServiceTest {
 
     @BeforeEach
     void init() {
-        userId = 1L;
-        shoppingListId = 1L;
+        userId = 100L;
+        shoppingListId = 100L;
 
         String recipeName = "Recipe name";
 

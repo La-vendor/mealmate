@@ -3,6 +3,7 @@ package com.lavendor.mealmate.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,11 +29,10 @@ public class DailyMenu {
     }
 
 
-
-
     public DailyMenu(LocalDate date, Long userId) {
         this.date = date;
         this.userId = userId;
+        this.recipeList = new ArrayList<>();
     }
 
     public Long getDailyMenuId() {
@@ -69,6 +69,10 @@ public class DailyMenu {
     }
 
     public boolean containsRecipe(Recipe recipe) {
-        return recipeList.contains(recipe);
+        if(recipeList!=null) {
+            return recipeList.contains(recipe);
+        }else{
+            return false;
+        }
     }
 }

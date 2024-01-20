@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,12 +18,16 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = MealmateApplication.class)
 public class BasicIngredientServiceTest {
 
     String testIngredientName = "Ingredient";
     String testIngredientUnit = "grams";
     Long activeUserId;
+    Long ingredientId = 100L;
+    Long userId = 100L;
+
 
     @MockBean
     private BasicIngredientRepository basicIngredientRepository;
@@ -37,7 +42,7 @@ public class BasicIngredientServiceTest {
     public void init() {
         testIngredientName = "Minced Meat";
         testIngredientUnit = "grams";
-        activeUserId = 1L;
+        activeUserId = 100L;
     }
 
     @Test
@@ -55,7 +60,7 @@ public class BasicIngredientServiceTest {
 
     @Test
     public void testGetBasicIngredientById() {
-        Long ingredientId = 1L;
+
         BasicIngredient expectedIngredient = new BasicIngredient(testIngredientName, testIngredientUnit, activeUserId);
 
         when(basicIngredientRepository.findById(ingredientId)).thenReturn(Optional.of(expectedIngredient));
@@ -68,7 +73,6 @@ public class BasicIngredientServiceTest {
 
     @Test
     void testGetBasicIngredientById_NonExistingEntity() {
-        Long ingredientId = 1L;
 
         when(basicIngredientRepository.findById(ingredientId)).thenReturn(Optional.empty());
 
@@ -103,20 +107,18 @@ public class BasicIngredientServiceTest {
 
     @Test
     public void testDeleteBasicIngredient() {
-        Long basicIngredientId = 1L;
         BasicIngredient mockIngredient = new BasicIngredient("Item1");
 
-        when(basicIngredientRepository.findById(basicIngredientId)).thenReturn(Optional.of(mockIngredient));
+        when(basicIngredientRepository.findById(ingredientId)).thenReturn(Optional.of(mockIngredient));
 
-        basicIngredientService.deleteBasicIngredient(basicIngredientId);
+        basicIngredientService.deleteBasicIngredient(ingredientId);
 
-        verify(basicIngredientRepository, times(1)).findById(basicIngredientId);
+        verify(basicIngredientRepository, times(1)).findById(ingredientId);
         verify(basicIngredientRepository, times(1)).delete(mockIngredient);
     }
 
     @Test
     public void testGetAllUserBasicIngredients() {
-        Long userId = 1L;
 
         BasicIngredient ingredient1 = new BasicIngredient("Item1", "grams", userId);
         BasicIngredient ingredient2 = new BasicIngredient("Item2", "grams", userId);

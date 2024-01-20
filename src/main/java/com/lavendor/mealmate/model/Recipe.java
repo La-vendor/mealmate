@@ -24,6 +24,10 @@ public class Recipe {
     public Recipe() {
     }
 
+    public Recipe(String recipeName) {
+        this.recipeName = recipeName;
+    }
+
     public Recipe(Recipe recipe) {
         this.recipeName = recipe.getRecipeName();
         this.recipeIngredients = recipe.getIngredients();
