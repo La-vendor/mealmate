@@ -59,9 +59,16 @@ public class UserService {
     }
 
     //TODO Refactor, add parts to RecipeService and BasicIngredientsService
+    //TODO RecipeIngredients have to update BasicIngredients id
     public void addStarterDataToUser(User user) {
         List<Recipe> starterRecipes = recipeService.getStarterRecipes();
         List<BasicIngredient> starterIngredients = basicIngredientService.getStarterIngredients();
+
+        for (BasicIngredient basicIngredient : starterIngredients) {
+            BasicIngredient copiedIngredient = new BasicIngredient(basicIngredient);
+            copiedIngredient.setUserId(user.getUserId());
+            basicIngredientRepository.save(copiedIngredient);
+        }
 
         for (Recipe starterRecipe : starterRecipes) {
             Recipe copiedRecipe = new Recipe(starterRecipe);
@@ -80,11 +87,7 @@ public class UserService {
             recipeIngredientRepository.saveAll(copiedRecipeIngredients);
         }
 
-        for (BasicIngredient basicIngredient : starterIngredients) {
-            BasicIngredient copiedIngredient = new BasicIngredient(basicIngredient);
-            copiedIngredient.setUserId(user.getUserId());
-            basicIngredientRepository.save(copiedIngredient);
-        }
+
     }
 
     public Optional<User> getUserByUsername(String username) {

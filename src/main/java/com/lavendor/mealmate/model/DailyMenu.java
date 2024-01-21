@@ -39,11 +39,6 @@ public class DailyMenu {
         return dailyMenuId;
     }
 
-    public void setDailyMenuId(Long dailyMenuId) {
-        this.dailyMenuId = dailyMenuId;
-    }
-
-
     public LocalDate getDate() {
         return date;
     }

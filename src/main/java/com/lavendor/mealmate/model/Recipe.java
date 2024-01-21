@@ -51,10 +51,6 @@ public class Recipe {
         return recipeId;
     }
 
-    public void setRecipeId(Long recipeId) {
-        this.recipeId = recipeId;
-    }
-
     public String getRecipeName() {
         return recipeName;
     }

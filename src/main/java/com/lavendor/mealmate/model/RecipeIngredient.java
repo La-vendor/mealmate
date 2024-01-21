@@ -44,10 +44,6 @@ public class RecipeIngredient {
         return recipeIngredientId;
     }
 
-    public void setRecipeIngredientId(Long recipeIngredientId) {
-        this.recipeIngredientId = recipeIngredientId;
-    }
-
     public BasicIngredient getBasicIngredient() {
         return basicIngredient;
     }

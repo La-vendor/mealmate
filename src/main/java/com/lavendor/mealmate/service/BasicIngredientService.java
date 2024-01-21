@@ -1,7 +1,9 @@
 package com.lavendor.mealmate.service;
 
 import com.lavendor.mealmate.model.BasicIngredient;
+import com.lavendor.mealmate.model.Recipe;
 import com.lavendor.mealmate.repository.BasicIngredientRepository;
+import com.lavendor.mealmate.repository.RecipeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,11 @@ import java.util.Optional;
 public class BasicIngredientService {
 
     private final BasicIngredientRepository basicIngredientRepository;
+    private final RecipeRepository recipeRepository;
 
-    public BasicIngredientService(BasicIngredientRepository basicIngredientRepository) {
+    public BasicIngredientService(BasicIngredientRepository basicIngredientRepository, RecipeRepository recipeRepository) {
         this.basicIngredientRepository = basicIngredientRepository;
+        this.recipeRepository = recipeRepository;
     }
 
     public BasicIngredient addBasicIngredient(String basicIngredientName, String unit, Long userId){
@@ -57,5 +61,10 @@ public class BasicIngredientService {
             optionalBasicIngredient.ifPresent(basicIngredientsToAdd::add);
         }
         return basicIngredientsToAdd;
+    }
+
+    public List<Recipe> getRecipesByBasicIngredientId(Long basicIngredientId){
+
+        return recipeRepository.findByBasicIngredientId(basicIngredientId);
     }
 }

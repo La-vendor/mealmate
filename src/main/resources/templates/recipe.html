@@ -24,6 +24,7 @@
                 <tr>
                     <th scope="col" class="col-3">Name</th>
                     <th scope="col" class="col-2"></th>
+                    <th scope="col" class="col-1"></th>
                 </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -32,6 +33,13 @@
                     <td>
                         <a id="view-ingredients" class="btn btn-primary"
                            th:href="@{'/recipe/ingredients/' + ${recipe.recipeId}}">View Ingredients</a>
+
+                    </td>
+                    <td>
+                        <form th:action="@{'/recipe/delete/' + ${recipe.recipeId}}" method="POST">
+                            <button type="submit" class="btn-close"
+                                    aria-label="Close"></button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

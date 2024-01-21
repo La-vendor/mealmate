@@ -23,12 +23,19 @@
                 <tr>
                     <th scope="col" class="col-2">Name</th>
                     <th scope="col" class="col-1">Unit</th>
+                    <th scope="col" class="col-1">Unit</th>
                 </tr>
                 </thead>
                 <tbody class="table-group-divider">
                 <tr th:each="basicIngredient : ${basicIngredientsList}">
                     <td th:text="${basicIngredient.basicIngredientName}"></td>
                     <td th:text="${basicIngredient.unit}"></td>
+                    <td>
+                        <form th:action="@{'/ingredients/delete/' + ${basicIngredient.basicIngredientId}}" method="POST">
+                            <button type="submit" class="btn-close"
+                                    aria-label="Close"></button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>

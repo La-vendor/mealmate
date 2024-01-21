@@ -8,15 +8,13 @@ import com.lavendor.mealmate.service.BasicIngredientService;
 import com.lavendor.mealmate.service.RecipeIngredientService;
 import com.lavendor.mealmate.service.RecipeService;
 import com.lavendor.mealmate.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -92,9 +90,13 @@ public class RecipeController {
                             Authentication authentication) {
 
         Long activeUserId = userService.getActiveUserId(authentication);
-        Recipe newRecipe = recipeService.createRecipe(newRecipeName, temporaryIngredients, activeUserId);
-        recipeIngredientService.addRecipeToIngredients(temporaryIngredients, newRecipe);
-        temporaryIngredients.clear();
+        try {
+            Recipe newRecipe = recipeService.createRecipe(newRecipeName, temporaryIngredients, activeUserId);
+            recipeIngredientService.addRecipeToIngredients(temporaryIngredients, newRecipe);
+            temporaryIngredients.clear();
+        }catch(DataIntegrityViolationException e){
+            e.printStackTrace();
+        }
         return "redirect:/recipe";
     }
 
@@ -106,29 +108,10 @@ public class RecipeController {
         return "redirect:/recipe";
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Recipe>> getAllRecipes() {
-        List<Recipe> recipes = recipeService.getAllRecipes();
-
-        if (recipes != null && !recipes.isEmpty()) {
-            return ResponseEntity.ok(recipes);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
-        }
-    }
-
-    @GetMapping("/id/{id}")
-    public ResponseEntity<Recipe> getRecipeById(@PathVariable("id") String stringId) {
-
-        Long recipeId = Long.valueOf(stringId);
-        Recipe recipe = recipeService.getRecipeById(recipeId);
-        return ResponseEntity.ok(recipe);
-    }
-
-    @DeleteMapping("/id/{id}")
-    public ResponseEntity<String> deleteRecipe(@PathVariable("id") String stringId) {
+    @PostMapping("/delete/{id}")
+    public String deleteRecipe(@PathVariable("id") String stringId) {
         Long recipeId = Long.valueOf(stringId);
         recipeService.deleteRecipe(recipeId);
-        return ResponseEntity.ok("Recipe with ID: " + recipeId + " deleted successfully");
+        return "redirect:/recipe";
     }
 }

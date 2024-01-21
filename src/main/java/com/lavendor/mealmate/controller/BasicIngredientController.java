@@ -1,16 +1,15 @@
 package com.lavendor.mealmate.controller;
 
+import com.lavendor.mealmate.exception.IngredientDeleteException;
 import com.lavendor.mealmate.model.BasicIngredient;
+import com.lavendor.mealmate.model.Recipe;
 import com.lavendor.mealmate.service.BasicIngredientService;
 import com.lavendor.mealmate.service.UserService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -54,6 +53,20 @@ public class BasicIngredientController {
             throw new DataIntegrityViolationException("Ingredient already exists");
         }
 
+        return "redirect:/ingredients";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteIngredient(@PathVariable("id") Long ingredientId) {
+
+        BasicIngredient basicIngredient = basicIngredientService.getBasicIngredientById(ingredientId);
+
+        List<Recipe> recipeList = basicIngredientService.getRecipesByBasicIngredientId(ingredientId);
+        if(recipeList.isEmpty()){
+            basicIngredientService.deleteBasicIngredient(ingredientId);
+        }else{
+            throw new IngredientDeleteException(basicIngredient.getBasicIngredientName());
+        }
         return "redirect:/ingredients";
     }
 
