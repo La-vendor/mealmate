@@ -24,27 +24,26 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(classes = MealmateApplication.class)
 public class ShoppingListServiceTest {
 
-    Long userId;
-    List<DailyMenu> dailyMenus;
-    List<DailyMenu> dailyMenusWithoutRecipes;
-    Long shoppingListId;
+    private final Long userId = 100L;
+    private final Long shoppingListId  = 100L;
+    String recipeName = "Recipe name";
 
-    BasicIngredient basicIngredient1;
-    BasicIngredient basicIngredient2;
-    BasicIngredient basicIngredient3;
+
+    private List<DailyMenu> dailyMenus;
+    private List<DailyMenu> dailyMenusWithoutRecipes;
+
+    private BasicIngredient basicIngredient1;
+    private BasicIngredient basicIngredient2;
+    private BasicIngredient basicIngredient3;
 
     @MockBean
-    ShoppingListRepository shoppingListRepository;
+    private ShoppingListRepository shoppingListRepository;
 
     @Autowired
-    ShoppingListService shoppingListService;
+    private ShoppingListService shoppingListService;
 
     @BeforeEach
     void init() {
-        userId = 100L;
-        shoppingListId = 100L;
-
-        String recipeName = "Recipe name";
 
         LocalDate date1 = LocalDate.now();
         LocalDate date2 = date1.plusDays(1);

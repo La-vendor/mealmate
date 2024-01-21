@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -21,15 +22,15 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = MealmateApplication.class)
 public class UserServiceTest {
 
-    String username = "test_username";
-    String password = "test_password";
-    Long userId = 1L;
+    private final String username = "test_username";
+    private final String password = "test_password";
+    private final Long userId = 1L;
 
     @MockBean
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Test
     public void testCreateUserWithNullUsername() {
@@ -37,9 +38,8 @@ public class UserServiceTest {
 
         assertThrows(RuntimeException.class, () -> {
             userService.createUser(mockUserDTO);
-
-            verify(userRepository, never()).save(any(User.class));
         });
+        verify(userRepository, never()).save(any(User.class));
     }
 
     @Test
@@ -62,15 +62,15 @@ public class UserServiceTest {
     public void testCreateUserWithUsernameNotAvailable() {
 
         UserDTO mockUserDTO = new UserDTO(username, password, password);
-        User expectedUser = new User(username,password);
 
-        when(userRepository.save(any(User.class))).thenThrow(new RuntimeException("Username is not available"));
+        when(userRepository.save(any(User.class))).thenThrow(DataIntegrityViolationException.class);
 
 
         RuntimeException runtimeException = assertThrows(RuntimeException.class, ()->{
             userService.createUser(mockUserDTO);
         });
         verify(userRepository, times(1)).save(any(User.class));
+        assertTrue(runtimeException.getMessage().contains("Username is not available"));
     }
 
     @Test

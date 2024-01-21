@@ -25,29 +25,25 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = MealmateApplication.class)
 public class DailyMenuServiceTest {
 
-    Long userId = 100L;
-    Long recipeId = 100L;
-    Long dailyMenuId = 100L;
-    DailyMenu testDailyMenu;
-
-
-    LocalDate testDate = LocalDate.now();
-
+    private final Long userId = 100L;
+    private final Long recipeId = 100L;
+    private final Long dailyMenuId = 100L;
+    private DailyMenu testDailyMenu;
+    private final LocalDate testDate = LocalDate.now();
 
     @MockBean
-    DailyMenuRepository dailyMenuRepository;
+    private DailyMenuRepository dailyMenuRepository;
 
     @MockBean
-    RecipeRepository recipeRepository;
+    private RecipeRepository recipeRepository;
 
     @Autowired
-    DailyMenuService dailyMenuService;
+    private DailyMenuService dailyMenuService;
 
     @BeforeEach
     void init(){
         testDailyMenu = new DailyMenu(testDate,userId);
     }
-
 
     @Test
     public void testCreateDailyMenu(){

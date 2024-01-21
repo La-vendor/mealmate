@@ -25,15 +25,15 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = MealmateApplication.class)
 public class RecipeServiceTest {
 
-    List<RecipeIngredient> recipeIngredients;
-    Long recipeId = 100L;
-    Long userId = 100L;
+    private List<RecipeIngredient> recipeIngredients;
+    private final Long recipeId = 100L;
+    private final Long userId = 100L;
 
     @MockBean
-    RecipeRepository recipeRepository;
+    private RecipeRepository recipeRepository;
 
     @Autowired
-    RecipeService recipeService;
+    private RecipeService recipeService;
 
     @BeforeEach
     void init(){

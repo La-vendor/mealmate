@@ -22,11 +22,10 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = MealmateApplication.class)
 public class BasicIngredientServiceTest {
 
-    String testIngredientName = "Ingredient";
-    String testIngredientUnit = "grams";
-    Long activeUserId;
-    Long ingredientId = 100L;
-    Long userId = 100L;
+    private String testIngredientName = "Ingredient";
+    private String testIngredientUnit = "grams";
+    private Long activeUserId;
+    private final Long ingredientId = 100L;
 
 
     @MockBean
@@ -36,7 +35,7 @@ public class BasicIngredientServiceTest {
     private BasicIngredientService basicIngredientService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @BeforeEach
     public void init() {
@@ -119,6 +118,7 @@ public class BasicIngredientServiceTest {
 
     @Test
     public void testGetAllUserBasicIngredients() {
+        Long userId = 100L;
 
         BasicIngredient ingredient1 = new BasicIngredient("Item1", "grams", userId);
         BasicIngredient ingredient2 = new BasicIngredient("Item2", "grams", userId);
