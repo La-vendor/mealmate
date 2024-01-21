@@ -3,16 +3,18 @@ package com.lavendor.mealmate.controller;
 import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.service.BasicIngredientService;
 import com.lavendor.mealmate.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/ingredients")
@@ -26,7 +28,6 @@ public class BasicIngredientController {
         this.userService = userService;
     }
 
-    //Thymeleaf
     @GetMapping()
     public String getBasicIngredientsPage(Authentication authentication, Model model) {
         Long activeUserId = userService.getActiveUserId(authentication);
@@ -44,25 +45,18 @@ public class BasicIngredientController {
     public String addNewIngredient(@ModelAttribute BasicIngredient basicIngredient,
                                    Authentication authentication) {
         Long activeUserId = userService.getActiveUserId(authentication);
-        if (!basicIngredientService.checkIfIngredientExists(basicIngredient.getBasicIngredientName())) {
+        Optional<BasicIngredient> findIngredient = basicIngredientService.getBasicIngredientByNameAndUserId(
+                basicIngredient.getBasicIngredientName(),
+                activeUserId);
+        if (findIngredient.isEmpty()) {
             basicIngredientService.addBasicIngredient(basicIngredient.getBasicIngredientName(), basicIngredient.getUnit(), activeUserId);
+        }else{
+            throw new DataIntegrityViolationException("Ingredient already exists");
         }
 
         return "redirect:/ingredients";
     }
 
-
-    // REST
-    @GetMapping("/all")
-    public ResponseEntity<List<BasicIngredient>> getAllBasicIngredients() {
-        List<BasicIngredient> basicIngredients = basicIngredientService.getAllBasicIngredients();
-
-        if (basicIngredients != null && !basicIngredients.isEmpty()) {
-            return ResponseEntity.ok(basicIngredients);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
-        }
-    }
 
 }
 

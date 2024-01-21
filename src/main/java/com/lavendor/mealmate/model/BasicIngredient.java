@@ -2,6 +2,8 @@ package com.lavendor.mealmate.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "basic_ingredients")
 public class BasicIngredient {
@@ -62,5 +64,17 @@ public class BasicIngredient {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BasicIngredient that)) return false;
+        return Objects.equals(basicIngredientName, that.basicIngredientName) && Objects.equals(unit, that.unit) && Objects.equals(userId, that.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(basicIngredientName, unit, userId);
     }
 }

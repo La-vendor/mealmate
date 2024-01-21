@@ -31,6 +31,10 @@ public class BasicIngredientService {
         return basicIngredientRepository.existsByBasicIngredientName(basicIngredientName);
     }
 
+    public Optional<BasicIngredient> getBasicIngredientByNameAndUserId(String basicIngredientName, Long userId){
+        return basicIngredientRepository.findByBasicIngredientNameAndUserId(basicIngredientName,userId);
+    }
+
     public List<BasicIngredient> getAllBasicIngredients(){
         return basicIngredientRepository.findAll();
     }

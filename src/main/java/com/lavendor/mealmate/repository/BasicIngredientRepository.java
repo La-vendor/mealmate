@@ -12,4 +12,7 @@ public interface BasicIngredientRepository extends JpaRepository<BasicIngredient
     boolean existsByBasicIngredientName(String basicIngredientName);
 
     List<BasicIngredient> findByUserId(Long userId);
+
+    Optional<BasicIngredient> findByBasicIngredientNameAndUserId(String basicIngredientName, Long userId);
+
 }
