@@ -11,7 +11,7 @@ public class RecipeIngredient {
     @Column(name = "recipe_ingredient_id")
     private Long recipeIngredientId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "basic_ingredient_id")
     private BasicIngredient basicIngredient;
 
@@ -42,6 +42,10 @@ public class RecipeIngredient {
 
     public Long getRecipeIngredientId() {
         return recipeIngredientId;
+    }
+
+    public void setRecipeIngredientId(Long recipeIngredientId) {
+        this.recipeIngredientId = recipeIngredientId;
     }
 
     public BasicIngredient getBasicIngredient() {

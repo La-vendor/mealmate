@@ -17,7 +17,7 @@ public class Recipe {
     @JoinColumn(name = "user_id")
     private Long userId;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "recipe", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<RecipeIngredient> recipeIngredients;
 
 

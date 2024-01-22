@@ -38,6 +38,10 @@ public class BasicIngredient {
         return basicIngredientId;
     }
 
+    public void setBasicIngredientId(Long basicIngredientId) {
+        this.basicIngredientId = basicIngredientId;
+    }
+
     public String getBasicIngredientName() {
         return basicIngredientName;
     }

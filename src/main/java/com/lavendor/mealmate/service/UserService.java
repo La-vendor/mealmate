@@ -1,6 +1,8 @@
 package com.lavendor.mealmate.service;
 
-import com.lavendor.mealmate.model.*;
+import com.lavendor.mealmate.model.Recipe;
+import com.lavendor.mealmate.model.User;
+import com.lavendor.mealmate.model.UserDTO;
 import com.lavendor.mealmate.repository.BasicIngredientRepository;
 import com.lavendor.mealmate.repository.RecipeIngredientRepository;
 import com.lavendor.mealmate.repository.RecipeRepository;
@@ -10,7 +12,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,36 +59,14 @@ public class UserService {
         return (userDTO.password().equals(userDTO.confirmPassword()));
     }
 
-    //TODO Refactor, add parts to RecipeService and BasicIngredientsService
-    //TODO RecipeIngredients have to update BasicIngredients id
     public void addStarterDataToUser(User user) {
+        Long userId = user.getUserId();
         List<Recipe> starterRecipes = recipeService.getStarterRecipes();
-        List<BasicIngredient> starterIngredients = basicIngredientService.getStarterIngredients();
-
-        for (BasicIngredient basicIngredient : starterIngredients) {
-            BasicIngredient copiedIngredient = new BasicIngredient(basicIngredient);
-            copiedIngredient.setUserId(user.getUserId());
-            basicIngredientRepository.save(copiedIngredient);
-        }
 
         for (Recipe starterRecipe : starterRecipes) {
-            Recipe copiedRecipe = new Recipe(starterRecipe);
-
-            List<RecipeIngredient> copiedRecipeIngredients = new ArrayList<>();
-
-            for (RecipeIngredient starterIngredient : starterRecipe.getIngredients()) {
-                RecipeIngredient copiedRecipeIngredient = new RecipeIngredient(starterIngredient);
-
-                copiedRecipeIngredient.setRecipe(copiedRecipe);
-                copiedRecipeIngredients.add(copiedRecipeIngredient);
-            }
-            copiedRecipe.setUserId(user.getUserId());
-            copiedRecipe.setIngredients(copiedRecipeIngredients);
+            Recipe copiedRecipe = RecipeService.copyRecipe(starterRecipe, userId);
             recipeRepository.save(copiedRecipe);
-            recipeIngredientRepository.saveAll(copiedRecipeIngredients);
         }
-
-
     }
 
     public Optional<User> getUserByUsername(String username) {

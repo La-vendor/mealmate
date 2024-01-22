@@ -12,8 +12,18 @@
 <body>
 <!-- Sidebar -->
 <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
 <div class="container" style="margin-bottom: 20px; margin-top: 20px;">
-    <h2>Ingredients</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Ingredients</h2>
+        </div>
+        <div class="col-md-6">
+            <div class="alert alert-danger">
+                <p>Error</p>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="container">
     <div class="row">
@@ -31,7 +41,8 @@
                     <td th:text="${basicIngredient.basicIngredientName}"></td>
                     <td th:text="${basicIngredient.unit}"></td>
                     <td>
-                        <form th:action="@{'/ingredients/delete/' + ${basicIngredient.basicIngredientId}}" method="POST">
+                        <form th:action="@{'/ingredients/delete/' + ${basicIngredient.basicIngredientId}}"
+                              method="POST">
                             <button type="submit" class="btn-close"
                                     aria-label="Close"></button>
                         </form>
@@ -45,11 +56,12 @@
                 <div class="card-header">
                     <h5 class="card-title">Add New Ingredient</h5>
                 </div>
-                <div class="card-body" >
+                <div class="card-body">
                     <form action="#" th:action="@{/ingredients/new-ingredient}" method="POST">
                         <div class="mb-3">
                             <label for="basicIngredientName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="basicIngredientName" name="basicIngredientName" required>
+                            <input type="text" class="form-control" id="basicIngredientName" name="basicIngredientName"
+                                   required>
                         </div>
                         <div class="mb-3">
                             <label for="unit" class="form-label">Unit</label>

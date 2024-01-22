@@ -92,7 +92,7 @@ public class RecipeController {
         Long activeUserId = userService.getActiveUserId(authentication);
         try {
             Recipe newRecipe = recipeService.createRecipe(newRecipeName, temporaryIngredients, activeUserId);
-            recipeIngredientService.addRecipeToIngredients(temporaryIngredients, newRecipe);
+//            recipeIngredientService.addRecipeToIngredients(temporaryIngredients, newRecipe);
             temporaryIngredients.clear();
         }catch(DataIntegrityViolationException e){
             e.printStackTrace();

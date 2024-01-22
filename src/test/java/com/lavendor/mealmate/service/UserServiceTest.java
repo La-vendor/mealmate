@@ -94,6 +94,7 @@ public class UserServiceTest {
         assertFalse(result, "Passwords should not match");
     }
 
+
     @Test
     public void testGetUserByUsername() {
         User expectedUser = new User(username,password);

@@ -38,16 +38,20 @@ public class RecipeServiceTest {
     @BeforeEach
     void init(){
         BasicIngredient basicIngredient1 = new BasicIngredient("ingredient1");
+        basicIngredient1.setBasicIngredientId(100L);
         BasicIngredient basicIngredient2 = new BasicIngredient("ingredient2");
+        basicIngredient2.setBasicIngredientId(101L);
 
         RecipeIngredient recipeIngredient1 = new RecipeIngredient(basicIngredient1,100.0);
+        recipeIngredient1.setRecipeIngredientId(100L);
         RecipeIngredient recipeIngredient2 = new RecipeIngredient(basicIngredient2,50.0);
+        recipeIngredient2.setRecipeIngredientId(101L);
 
         recipeIngredients= Arrays.asList(recipeIngredient1, recipeIngredient2);
     }
 
     @Test
-    public void createRecipe(){
+    public void testCreateRecipe(){
         String recipeName = "Recipe name";
 
         Recipe expectedRecipe = new Recipe(recipeName, recipeIngredients, userId);
