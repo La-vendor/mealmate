@@ -87,10 +87,8 @@ public class RecipeService {
         }
         Recipe copiedRecipe = new Recipe();
         copiedRecipe.setRecipeName(originalRecipe.getRecipeName());
-//        BeanUtils.copyProperties(originalRecipe, copiedRecipe);
-
-
         copiedRecipe.setUserId(newUserId);
+        copiedRecipe = recipeRepository.save(copiedRecipe);
 
         // Copy RecipeIngredients
         List<RecipeIngredient> copiedRecipeIngredients = new ArrayList<>();
