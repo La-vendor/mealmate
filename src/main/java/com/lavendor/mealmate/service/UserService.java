@@ -64,7 +64,7 @@ public class UserService {
         List<Recipe> starterRecipes = recipeService.getStarterRecipes();
 
         for (Recipe starterRecipe : starterRecipes) {
-            Recipe copiedRecipe = RecipeService.copyRecipe(starterRecipe, userId);
+            Recipe copiedRecipe = recipeService.copyRecipe(starterRecipe, userId);
             recipeRepository.save(copiedRecipe);
         }
     }

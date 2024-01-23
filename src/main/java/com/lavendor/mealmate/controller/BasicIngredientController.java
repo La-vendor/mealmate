@@ -2,7 +2,6 @@ package com.lavendor.mealmate.controller;
 
 import com.lavendor.mealmate.exception.IngredientDeleteException;
 import com.lavendor.mealmate.model.BasicIngredient;
-import com.lavendor.mealmate.model.Recipe;
 import com.lavendor.mealmate.service.BasicIngredientService;
 import com.lavendor.mealmate.service.UserService;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Comparator;
 import java.util.List;
@@ -57,17 +58,17 @@ public class BasicIngredientController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteIngredient(@PathVariable("id") Long ingredientId) {
+    public RedirectView deleteIngredient(@PathVariable("id") Long ingredientId, RedirectAttributes attributes) {
+        String ingredientError = null;
 
-        BasicIngredient basicIngredient = basicIngredientService.getBasicIngredientById(ingredientId);
-
-        List<Recipe> recipeList = basicIngredientService.getRecipesByBasicIngredientId(ingredientId);
-        if(recipeList.isEmpty()){
+        try {
             basicIngredientService.deleteBasicIngredient(ingredientId);
-        }else{
-            throw new IngredientDeleteException(basicIngredient.getBasicIngredientName());
+        }catch (IngredientDeleteException e){
+            ingredientError = e.getMessage();
         }
-        return "redirect:/ingredients";
+        attributes.addFlashAttribute("ingredientError", ingredientError);
+        return new RedirectView("/ingredients", true);
+//        return "redirect:/ingredients";
     }
 
 

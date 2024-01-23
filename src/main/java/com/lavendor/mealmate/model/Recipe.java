@@ -17,7 +17,7 @@ public class Recipe {
     @JoinColumn(name = "user_id")
     private Long userId;
 
-    @OneToMany(mappedBy = "recipe", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<RecipeIngredient> recipeIngredients;
 
 
@@ -30,7 +30,7 @@ public class Recipe {
 
     public Recipe(Recipe recipe) {
         this.recipeName = recipe.getRecipeName();
-        this.recipeIngredients = recipe.getIngredients();
+//        this.recipeIngredients = recipe.getIngredients();
     }
 
     public Recipe(String recipeName, List<RecipeIngredient> recipeIngredients, Long userId) {
@@ -69,5 +69,10 @@ public class Recipe {
 
     public void addIngredient(RecipeIngredient recipeIngredient) {
         this.recipeIngredients.add(recipeIngredient);
+    }
+
+    @Override
+    public String toString() {
+        return recipeName;
     }
 }

@@ -11,7 +11,7 @@ public class RecipeIngredient {
     @Column(name = "recipe_ingredient_id")
     private Long recipeIngredientId;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "basic_ingredient_id")
     private BasicIngredient basicIngredient;
 

@@ -1,5 +1,6 @@
 package com.lavendor.mealmate.service;
 
+import com.lavendor.mealmate.exception.IngredientDeleteException;
 import com.lavendor.mealmate.model.BasicIngredient;
 import com.lavendor.mealmate.model.Recipe;
 import com.lavendor.mealmate.repository.BasicIngredientRepository;
@@ -45,7 +46,12 @@ public class BasicIngredientService {
 
     public void deleteBasicIngredient(Long basicIngredientId){
         BasicIngredient basicIngredient = basicIngredientRepository.findById(basicIngredientId).orElseThrow(() -> new EntityNotFoundException("Ingredient not found"));
-        basicIngredientRepository.delete(basicIngredient);
+        List<Recipe> recipeList = recipeRepository.findByBasicIngredientId(basicIngredientId);
+        if(recipeList.isEmpty()) {
+            basicIngredientRepository.delete(basicIngredient);
+        }else{
+            throw new IngredientDeleteException(basicIngredient.getBasicIngredientName(),recipeList);
+        }
     }
 
     public List<BasicIngredient> getBasicIngredientsByUserId(Long userId) {
