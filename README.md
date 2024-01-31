@@ -100,6 +100,6 @@ Alternatively, you can use Docker. Make sure you have Docker and Docker Compose 
 
 4. **Basic Ingredients**
 
-<img src='basic-ingredient.png' width='700'>
+<img src='basic-ingredient.png' width='400'>
 
 
