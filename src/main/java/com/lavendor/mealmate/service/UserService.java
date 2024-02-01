@@ -55,6 +55,8 @@ public class UserService {
         }
     }
 
+
+
     public boolean checkIfPasswordIsEqual(UserDTO userDTO) {
         return (userDTO.password().equals(userDTO.confirmPassword()));
     }

@@ -24,7 +24,7 @@
                 </div>
                 <div class="card-body">
                     <form action="#" th:action="@{/signup}" th:object="${userDTO}" method="POST">
-                        <div th:if="${signupError}" class="alert alert-danger">
+                        <div th:if="${signupError}" class="alert alert-danger" id="signupError">
                             <p th:text="${signupError}"></p>
                         </div>
                         <div class="mb-3">
@@ -44,7 +44,7 @@
                         </div>
 
                         <a th:href="@{/login}" class="btn btn-primary">&lt; Back to Login</a>
-                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                        <button type="submit" class="btn btn-primary" id="buttonSignUp">Sign Up</button>
                     </form>
                 </div>
             </div>
