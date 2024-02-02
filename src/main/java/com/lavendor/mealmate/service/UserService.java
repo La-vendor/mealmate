@@ -8,7 +8,6 @@ import com.lavendor.mealmate.repository.RecipeIngredientRepository;
 import com.lavendor.mealmate.repository.RecipeRepository;
 import com.lavendor.mealmate.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -45,16 +44,13 @@ public class UserService {
         }
 
         String encodedPassword = passwordEncoderService.encodePassword(userDTO.password());
-        User user = new User(userDTO.username(), encodedPassword);
-
-        try {
+        if (userRepository.findByUsername(userDTO.username()).isEmpty()) {
+            User user = new User(userDTO.username(), encodedPassword);
             return userRepository.save(user);
-        } catch (DataIntegrityViolationException e) {
-            //TODO Add custom exception - UserAlreadyExistsException
-            throw new RuntimeException("Username is not available", e);
+        } else {
+            throw new RuntimeException("Username is not available");
         }
     }
-
 
 
     public boolean checkIfPasswordIsEqual(UserDTO userDTO) {

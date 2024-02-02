@@ -31,8 +31,7 @@ public class AuthenticationService  implements AuthenticationProvider {
             if (passwordEncoderService.matchPassword(password, userDetails.getPassword())) {
                 return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<>());
             }
-        }catch(UsernameNotFoundException e){
-            e.printStackTrace();
+        }catch(UsernameNotFoundException ignore){
         }
         return null;
     }

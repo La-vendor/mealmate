@@ -1,189 +1,216 @@
-        body{
-            background-color: #DCEDC8;
-        }
-        .sidebar{
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 200px;
-            height: 100%;
-            background-color: #BDBDBD;
-            color: #212121;
-            padding-top: 60px;
-            border-right: 1px solid #757575;
-            padding-right: 10px;
-        }
-        .sidebar a,
-        .sidebar-button,
-        .sidebar form{
-            border-top-right-radius: 20px;
-            border-bottom-right-radius: 20px;
-            display: block;
-            padding: 10px;
-            color: #212121;
-            text-decoration: none;
-        }
-        .sidebar form{
-            margin-top: 80px;
-        }
-        .sidebar-button {
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-            padding: 0px;
-            width: 100px;
-            text-align: left;
+body {
+    background-color: #DCEDC8;
+}
 
-        }
-        .sidebar a:hover{
-            background-color: #999999;
-        }
-         .sidebar-button:hover{
-            background-color: #999999;
-        }
-        .sidebar a.active {
-            font-weight: bold;
-            background-color: #8BC34A;
-            border: 1px solid #212121;
-        }
-        .sidebar form:hover {
-            background-color: #999999;
-        }
-        .card {
-            min-height: 180px;
-            width: 100%;
-            height: 100%;
-            max-width: 300px;
-            text-align: center;
-            border: 1px solid #212121;
-            border-radius: 5px;
-        }
-        .card-header{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .card-body{
-            text-align: center;
-        }
-        .reduced-width {
-            color: #212121;
-            width: 150px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            background-color: #FF9800;
-            margin: 0;
-            overflow: hidden; /* Hide overflow text */
-            text-overflow: ellipsis; /* Show ellipsis for overflow text */
-            white-space: nowrap; /* Prevent wrapping */
-        }
-        .list-group-item{
-            background-color: #BDBDBD;
-            border: 1px solid #212121;
-        }
-        .btn-add-daily-menu {
-            border: 0px;
-            height: 150px;
-            width: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #824c17;
-            font-weight: bold;
-            background-color: #FFC8A8;
-        }
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #BDBDBD;
+    color: #212121;
+    padding-top: 60px;
+    border-right: 1px solid #757575;
+    padding-right: 10px;
+    margin-right: 20px;
+}
 
-        .btn-img {
-            max-width: 50px;
-            margin-bottom: 10px;
-            border-radius: 50%;
-            padding: 5px;
-        }
-        .btn-close {
-            border: 2px solid #000;
-            border-radius: 20%;
-            padding: 4px;
-            margin: 3px;
-            background-color: transparent;
-            color: black;
-        }
-        .btn-close:hover {
-            background-color: #a11212;
-        }
+.sidebar a,
+.sidebar-button,
+.sidebar form {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: block;
+    padding: 10px;
+    color: #212121;
+    text-decoration: none;
+}
 
-        .recipe-dropdown {
-            width: 50px; /* Adjust width as needed */
-        }
+.sidebar form {
+    margin-top: 80px;
+}
 
-        .recipe-dropdown option {
-            white-space: normal; /* Allow text to wrap within options */
-        }
-        .container {
-            border: 1px solid #212121;
-            border-radius: 10px;
-            background-color: #8BC34A;
-            padding: 10px;
-        }
-        .container-fluid {
-            border: 1px solid #212121;
-            border-radius: 10px;
-            background-color: #8BC34A;
-            padding: 10px;
-        }
-        .btn{
-            background-color: #FF9800;
-            color: #212121;
-            border: 1px solid #212121;
-            font-weight: bold;
-        }
-        .btn:hover{
-            background-color: #855000;
-            color: #333333;
-            border: 1px solid #212121;
-        }
-        .btn:disabled{
-            background-color: #757575;
-            color: #333333;
-            border: 1px solid #212121;
-        }
+.sidebar-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+    width: 100px;
+    text-align: left;
+}
 
-        th:first-of-type {
-          border-top-left-radius: 10px;
-        }
-        th:last-of-type {
-          border-top-right-radius: 10px;
-        }
-        tr:last-of-type td:first-of-type {
-          border-bottom-left-radius: 10px;
-        }
-        tr:last-of-type td:last-of-type {
-          border-bottom-right-radius: 10px;
-        }
+.sidebar a:hover,
+.sidebar-button:hover {
+    background-color: #999999;
+}
 
-        .table-striped>tbody>tr:nth-child(odd)>td,
-        .table-striped>tbody>tr:nth-child(odd)>th {
-           background-color: #BDBDBD;
-         }
+.sidebar a.active {
+    font-weight: bold;
+    background-color: #8BC34A;
+    border: 1px solid #212121;
+}
 
-        .table-striped>tbody>tr:nth-child(even)>td,
-        .table-striped>tbody>tr:nth-child(even)>th {
-                    background-color: #999999;
-         }
-        .table thead th {
-            background-color: #757575;
-            color: #212121;
-        }
+.sidebar form:hover {
+    background-color: #999999;
+}
 
-        .table th, .table td {
-          border: 1px solid transparent;
-        }
+.card {
+    min-height: 180px;
+    min-width:
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    border: 1px solid #212121;
+    border-radius: 5px;
+    min-width: 250px;
+}
 
-        .custom-border-row {
-            border-radius: 5px;
-            border: 1px solid #212121;
-            margin-right: 10px;
-            padding: 10px;
-        }
+.card-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.reduced-width {
+    color: #212121;
+    width: 150px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    background-color: #FF9800;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.list-group-item {
+    background-color: #BDBDBD;
+    border: 1px solid #212121;
+}
+
+.btn-add-daily-menu {
+    height: 150px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: 5px;
+}
+
+.btn-img {
+    max-width: 50px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.btn-close {
+    border: 2px solid #000;
+    border-radius: 20%;
+    padding: 4px;
+    margin: 3px;
+    background-color: transparent;
+    color: black;
+}
+
+.btn-close:hover {
+    background-color: #a11212;
+}
+
+.recipe-dropdown {
+    width: 50px;
+}
+
+.recipe-dropdown option {
+    white-space: normal;
+}
+
+.container {
+    border: 1px solid #212121;
+    border-radius: 10px;
+    background-color: #8BC34A;
+    padding: 10px;
+    margin-left: 230px;
+    width: 80vw;
+}
+
+html,body {
+    height:100%;
+    padding:0;
+}
+
+.btn {
+    background-color: #FF9800;
+    color: #212121;
+    border: 1px solid #212121;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #855000;
+    color: #333333;
+    border: 1px solid #212121;
+}
+
+.btn:disabled {
+    background-color: #757575;
+    color: #333333;
+    border: 1px solid #212121;
+}
+
+th:first-of-type {
+    border-top-left-radius: 10px;
+}
+
+th:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 10px;
+}
+
+tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 10px;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+    background-color: #BDBDBD;
+}
+
+.table-striped>tbody>tr:nth-child(even)>td,
+.table-striped>tbody>tr:nth-child(even)>th {
+    background-color: #999999;
+}
+
+.table thead th {
+    background-color: #757575;
+    color: #212121;
+}
+
+.table th,
+.table td {
+    border: 1px solid transparent;
+}
+
+.custom-border-row {
+    border-radius: 5px;
+    border: 1px solid #212121;
+    margin-right: 10px;
+    padding: 10px;
+}
+
+.centered-content {
+    display: flex;
+    vertical-align: center;
+    justify-content: center;
+}

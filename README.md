@@ -22,7 +22,7 @@ recipes.
 - **JavaScript**
 - **OpenPDF** - https://github.com/LibrePDF/OpenPDF
 
-- **Test environment:**  JUnit, Mockito
+- **Test environment:**  JUnit, Mockito, Selenium
 
 
 ## Prerequisites

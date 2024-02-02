@@ -16,7 +16,7 @@
     <H2>Daily menu</H2>
 </div>
 <div class="container" style="align-items: center;">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 align-items-stretch">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2  g-3 align-items-stretch">
         <div class="col-md-3" th:each="dailyMenu : ${dailyMenus}">
             <div class="card text-center shadow-sm">
                 <div class="card-header">
@@ -56,7 +56,7 @@
                                 </option>
                             </select>
                         </div>
-                        <button class="btn btn-primary btn-sm mt-1 add-button" type="submit" disabled>Add</button>
+                        <button class="btn btn-primary btn-sm mt-1 add-button" type="submit" disabled id="add_recipe_button">Add</button>
                     </form>
 
 
@@ -64,9 +64,9 @@
             </div>
         </div>
         <div class="col-md-2 d-flex justify-content-center align-items-center">
-            <form th:action="@{/daily-menu/add}" method="POST">
-                <button type="submit" class="btn btn-outline-secondary btn-add-daily-menu">
-                    <img th:src="@{/images/plus.png}" alt="add" class="btn-img"/>Add Daily Menu
+            <form th:action="@{/daily-menu/add}" method="POST" id="add_daily_menu">
+                <button type="submit" class="btn btn-outline-secondary btn-add-daily-menu" >
+                    <img th:src="@{/images/plus.png}" alt="add" class="btn-img" >Add Daily Menu
                 </button>
             </form>
         </div>
@@ -76,7 +76,7 @@
     <div class="row">
         <div class="col-3">
             <form th:action="@{/shopping-list/generate}" method="GET">
-                <button type="submit" class="btn btn-primary generateShoppingListBtn" disabled>Generate Shopping List
+                <button type="submit" class="btn btn-primary generateShoppingListBtn" disabled id="generate_button">Generate Shopping List
                 </button>
             </form>
         </div>

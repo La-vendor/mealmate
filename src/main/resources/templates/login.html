@@ -24,13 +24,13 @@
                 </div>
                 <div class="card-body">
                     <form action="#" method="POST">
-                        <div id="success-msg" th:if="${signupSuccess}" class="alert alert-dark">
+                        <div id="success_msg" th:if="${signupSuccess}" class="alert alert-dark">
                             You successfully signed up! Please log in to continue.
                         </div>
-                        <div id="error-msg" th:if="${param.error}" class="alert alert-danger">
+                        <div id="error_msg" th:if="${param.error}" class="alert alert-danger">
                             Invalid username or password
                         </div>
-                        <div id="logout-msg" th:if="${param.logout != null}" class="alert alert-dark">
+                        <div id="logout_msg" th:if="${param.logout != null}" class="alert alert-dark">
                             You have been logged out
                         </div>
                         <div class="mb-3">
@@ -44,7 +44,7 @@
                         </div>
 
 
-                        <button type="submit" class="btn btn-primary" id="login-button">Login</button>
+                        <button type="submit" class="btn btn-primary" id="login_button">Login</button>
                         <a th:href="@{/signup}" class="btn btn-primary">Register</a>
                     </form>
                 </div>
