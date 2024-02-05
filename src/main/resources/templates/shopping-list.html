@@ -8,38 +8,44 @@
     <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}">
 </head>
 <body>
-<!--Sidebar-->
-<div th:replace="~{fragments/sidebar :: sidebar}"></div>
 
 
-<div class="container" style="margin-bottom: 20px; margin-top: 20px;">
-    <H2>Shopping List</H2>
-</div>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-3">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col" class="col-2">Name</th>
-                    <th scope="col" class="col-2">Quantity</th>
-                    <th scope="col" class="col-2">Unit</th>
-                </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                <tr th:each="entry : ${ingredientQuantityMap}">
-                    <td th:text="${entry.key.basicIngredientName}"></td>
-                    <td th:text="${entry.value}"></td>
-                    <td th:text="${entry.key.unit}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-3">
-            <form th:action="@{/shopping-list/export-pdf}" method="GET" th:if="${not #maps.isEmpty(ingredientQuantityMap)}">
-                <button type="submit" class="btn btn-primary generateShoppingListBtn">Save to PDF
-                </button>
-            </form>
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+        <div class="col-sm-12 main">
+            <div class="container" style="margin-bottom: 20px; margin-top: 20px;">
+                <H2>Shopping List</H2>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="col-2">Name</th>
+                                <th scope="col" class="col-2">Quantity</th>
+                                <th scope="col" class="col-2">Unit</th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                            <tr th:each="entry : ${ingredientQuantityMap}">
+                                <td th:text="${entry.key.basicIngredientName}"></td>
+                                <td th:text="${entry.value}"></td>
+                                <td th:text="${entry.key.unit}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-3">
+                        <form th:action="@{/shopping-list/export-pdf}" method="GET"
+                              th:if="${not #maps.isEmpty(ingredientQuantityMap)}">
+                            <button type="submit" class="btn btn-primary generateShoppingListBtn">Save to PDF
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
