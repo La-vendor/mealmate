@@ -1,6 +1,6 @@
 package com.lavendor.mealmate.exporter;
 
-import com.lavendor.mealmate.model.BasicIngredient;
+import com.lavendor.mealmate.ingredient.BasicIngredient;
 import com.lowagie.text.Font;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;

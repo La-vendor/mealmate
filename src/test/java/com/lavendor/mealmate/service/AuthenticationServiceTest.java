@@ -1,8 +1,11 @@
 package com.lavendor.mealmate.service;
 
 import com.lavendor.mealmate.MealmateApplication;
-import com.lavendor.mealmate.model.SecurityUser;
-import com.lavendor.mealmate.model.User;
+import com.lavendor.mealmate.security.AuthenticationService;
+import com.lavendor.mealmate.security.PasswordEncoderService;
+import com.lavendor.mealmate.user.JpaUserDetailsService;
+import com.lavendor.mealmate.user.SecurityUser;
+import com.lavendor.mealmate.user.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

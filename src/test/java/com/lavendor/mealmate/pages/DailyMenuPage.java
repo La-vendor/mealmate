@@ -19,8 +19,13 @@ public class DailyMenuPage {
     @FindBy(id = "generate_button")
     private WebElement generateShoppingListButton;
 
-    @FindBy(css = ".card")
+    @FindBy(id = "daily-menu-card")
     private List<WebElement> dailyMenuCards;
+
+    @FindBy(id = "reset-daily-menus")
+    private WebElement resetDailyMenusButton;
+
+
 
     public DailyMenuPage(WebDriver webDriver){
         PageFactory.initElements(webDriver,this);
@@ -41,4 +46,6 @@ public class DailyMenuPage {
     public int getDailyMenuCount() {
         return dailyMenuCards.size();
     }
+
+    public void resetDailyMenus(){resetDailyMenusButton.click();}
 }

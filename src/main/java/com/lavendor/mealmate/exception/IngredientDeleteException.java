@@ -1,6 +1,6 @@
 package com.lavendor.mealmate.exception;
 
-import com.lavendor.mealmate.model.Recipe;
+import com.lavendor.mealmate.recipe.Recipe;
 
 import java.util.List;
 

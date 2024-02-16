@@ -1,10 +1,11 @@
 package com.lavendor.mealmate.service;
 
 import com.lavendor.mealmate.MealmateApplication;
-import com.lavendor.mealmate.model.BasicIngredient;
-import com.lavendor.mealmate.model.Recipe;
-import com.lavendor.mealmate.model.RecipeIngredient;
-import com.lavendor.mealmate.repository.RecipeIngredientRepository;
+import com.lavendor.mealmate.ingredient.BasicIngredient;
+import com.lavendor.mealmate.recipe.Recipe;
+import com.lavendor.mealmate.recipeingredient.RecipeIngredient;
+import com.lavendor.mealmate.recipeingredient.RecipeIngredientRepository;
+import com.lavendor.mealmate.recipeingredient.RecipeIngredientService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

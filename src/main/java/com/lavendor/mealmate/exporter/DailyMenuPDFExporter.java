@@ -1,7 +1,7 @@
 package com.lavendor.mealmate.exporter;
 
-import com.lavendor.mealmate.model.DailyMenu;
-import com.lavendor.mealmate.model.Recipe;
+import com.lavendor.mealmate.dailymenu.DailyMenu;
+import com.lavendor.mealmate.recipe.Recipe;
 import com.lowagie.text.Font;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;

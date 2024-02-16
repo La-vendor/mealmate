@@ -1,8 +1,8 @@
 package com.lavendor.mealmate;
 
-import com.lavendor.mealmate.model.User;
-import com.lavendor.mealmate.model.UserDTO;
-import com.lavendor.mealmate.service.UserService;
+import com.lavendor.mealmate.user.User;
+import com.lavendor.mealmate.user.UserDTO;
+import com.lavendor.mealmate.user.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

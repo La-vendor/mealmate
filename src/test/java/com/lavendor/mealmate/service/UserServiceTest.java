@@ -1,15 +1,15 @@
 package com.lavendor.mealmate.service;
 
 import com.lavendor.mealmate.MealmateApplication;
-import com.lavendor.mealmate.model.User;
-import com.lavendor.mealmate.model.UserDTO;
-import com.lavendor.mealmate.repository.UserRepository;
+import com.lavendor.mealmate.user.User;
+import com.lavendor.mealmate.user.UserDTO;
+import com.lavendor.mealmate.user.UserRepository;
+import com.lavendor.mealmate.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -63,13 +63,13 @@ public class UserServiceTest {
 
         UserDTO mockUserDTO = new UserDTO(username, password, password);
 
-        when(userRepository.save(any(User.class))).thenThrow(DataIntegrityViolationException.class);
-
+        when(userRepository.findByUsername(username)).thenReturn(java.util.Optional.of(new User()));
 
         RuntimeException runtimeException = assertThrows(RuntimeException.class, ()->{
             userService.createUser(mockUserDTO);
         });
-        verify(userRepository, times(1)).save(any(User.class));
+        verify(userRepository, never()).save(any(User.class));
+        assertNotNull(runtimeException.getMessage());
         assertTrue(runtimeException.getMessage().contains("Username is not available"));
     }
 

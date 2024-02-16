@@ -19,7 +19,7 @@
             <div class="container" style="align-items: center;">
                 <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
                     <div class="col" th:each="dailyMenu : ${dailyMenus}">
-                        <div class="card text-center shadow-sm">
+                        <div class="card text-center shadow-sm" id="daily-menu-card">
                             <div class="card-header">
                                 <h5 class="card-title reduced-width"
                                     th:text="${#temporals.format(dailyMenu.date, 'EEEE', new java.util.Locale('en'))}"></h5>
@@ -36,8 +36,7 @@
                                     <th:block th:each="recipe : ${dailyMenu.recipeList}">
                                         <li class="list-group-item list-group-item-dark"
                                             style="position: relative; display: flex; align-items: center;">
-                                            <span th:text="${recipe.recipeName}"
-                                                  style="position: left: 0;">Recipe Name</span>
+                                            <span th:text="${recipe.recipeName}">Recipe Name</span>
                                             <form th:action="@{'/daily-menu/' + ${dailyMenu.dailyMenuId} +'/delete-recipe/' + ${recipe.recipeId}}"
                                                   method="post" style="position: absolute;  right: 0;">
                                                 <button type="submit" class="btn-close" aria-label="Close"></button>
@@ -69,7 +68,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 d-flex justify-content-center align-items-center">
+                    <div class="col-md-3 d-flex justify-content-center align-items-center " style="z-index: 1000">
                         <form th:action="@{/daily-menu/add}" method="POST" id="add_daily_menu">
                             <button type="submit" class="btn btn-outline-secondary btn-add-daily-menu">
                                 <img th:src="@{/images/plus.png}" alt="add" class="btn-img">Add Daily Menu
@@ -95,6 +94,13 @@
                             </button>
                         </form>
                     </div>
+                    <div class="col-3">
+                        <form th:action="@{/daily-menu/reset}" method="GET"
+                              th:if="${not #lists.isEmpty(dailyMenus)}">
+                            <button type="submit" class="btn btn-primary" id="reset-daily-menus">Reset Daily Menus
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -113,14 +119,14 @@
         addButton.disabled = (selectElement.value === "");
     }
 
-    document.querySelectorAll('.selected-recipe').forEach(function(select) {
+    document.querySelectorAll('.selected-recipe').forEach(function (select) {
         toggleButton(select);
-        select.addEventListener('change', function() {
+        select.addEventListener('change', function () {
             toggleButton(this);
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const recipeList = document.querySelectorAll('.list-group-item');
 
         if (recipeList.length !== 0) {

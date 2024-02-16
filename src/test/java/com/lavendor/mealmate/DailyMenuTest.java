@@ -45,12 +45,14 @@ public class DailyMenuTest {
     }
 
     @Test
-    public void addDailyMenu(){
+    public void addAndResetDailyMenu(){
         driver.get("http://localhost:" + port + "/daily-menu");
         dailyMenuPage = new DailyMenuPage(driver);
 
         dailyMenuPage.addDailyMenu();
         assertEquals(1, dailyMenuPage.getDailyMenuCount());
+        dailyMenuPage.resetDailyMenus();
+        assertEquals(0, dailyMenuPage.getDailyMenuCount());
     }
 
     @Test
@@ -61,5 +63,6 @@ public class DailyMenuTest {
         dailyMenuPage.addDailyMenu();
         dailyMenuPage.addDailyMenu();
         assertEquals(2, dailyMenuPage.getDailyMenuCount());
+        dailyMenuPage.resetDailyMenus();
     }
 }

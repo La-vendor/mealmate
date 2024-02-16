@@ -2,7 +2,7 @@ package com.lavendor.mealmate;
 
 import com.lavendor.mealmate.pages.LoginPage;
 import com.lavendor.mealmate.pages.SignupPage;
-import com.lavendor.mealmate.service.UserService;
+import com.lavendor.mealmate.user.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
